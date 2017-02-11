@@ -3,14 +3,12 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/math_2d.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/collisions.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/box.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/object.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/object.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/collisions.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/collisions.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/box.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/math_2d.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/renderer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/renderer.cpp" isTestSource="false" />
     </content>

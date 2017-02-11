@@ -4,7 +4,8 @@
 
 #include "renderer.h"
 
-Renderer::Renderer(std::vector<Object*>& stage) {
+Renderer::Renderer(std::vector<Object*>& stage)
+{
     this->stage = stage;
 
     SDL_Init(SDL_INIT_VIDEO);
@@ -24,12 +25,14 @@ Renderer::Renderer(std::vector<Object*>& stage) {
 }
 
 
-Renderer::~Renderer() {
+Renderer::~Renderer()
+{
 
     SDL_DestroyWindow(window);
 
     SDL_Quit();
 }
+
 
 void Renderer::render() {
 
@@ -44,7 +47,8 @@ void Renderer::render() {
 }
 
 
-void Renderer::add_object(Object* obj) {
+void Renderer::add_object(Object* obj)
+{
     stage.push_back(obj);
 }
 

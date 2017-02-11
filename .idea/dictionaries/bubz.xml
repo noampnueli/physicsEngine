@@ -2,6 +2,8 @@
   <dictionary name="bubz">
     <words>
       <w>aabb</w>
+      <w>collider</w>
+      <w>graphicstest</w>
     </words>
   </dictionary>
 </component>

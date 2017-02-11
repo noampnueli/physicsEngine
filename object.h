@@ -6,7 +6,7 @@
 #define GRAPHICSTEST_OBJECT_H
 
 
-#include "math_2d.h"
+#include "collisions.h"
 #include <vector>
 #include <SDL2/SDL.h>
 

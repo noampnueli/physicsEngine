@@ -7,24 +7,23 @@
 
 #include "math_2d.h"
 
-struct AABB
+enum CollType { AABB_c };
+
+class Collider
 {
-    vector2d min;
-    vector2d max;
+public:
+    CollType type;
 };
 
-bool AABB_overlap(AABB* coll1, AABB* coll2)
+class AABB : public Collider
 {
-    double dx1 = coll2->min.x - coll1->max.x;
-    double dy1 = coll2->min.y - coll1->max.y;
-    double dx2 = coll1->min.x - coll2->max.x;
-    double dy2 = coll1->min.y - coll2->max.y;
+public:
+    vector2d min;
+    vector2d max;
 
-    if(dx1 > 0 || dy1 > 0)
-        return false;
+    AABB() { this->type = AABB_c; }
+};
 
-    return !(dx2 > 0 || dy2 > 0);
-
-}
+extern bool collision_overlap(Collider* coll1 , Collider* coll2);
 
 #endif //GRAPHICSTEST_COLLISIONS_H
