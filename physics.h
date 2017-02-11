@@ -26,6 +26,8 @@ public:
 
     ~Physics()
     {
+        for(Object* obj : stage)
+            delete(obj);
         delete(renderer);
     }
 
@@ -51,7 +53,25 @@ public:
                 obj->calculate(dt);
             }
 
+            calculate_collisions();
+
             renderer->render();
+        }
+    }
+
+    //TODO: use a more efficient algorithm - O(n^2) for now :(
+    void calculate_collisions()
+    {
+        for(int i = 0; i < stage.size(); i++)
+        {
+            for(int k = 0; k < stage.size(); k++)
+            {
+                if(collision_overlap(stage[i]->get_collider(), stage[k]->get_collider()))
+                {
+                    // Collide!
+                    std::cout << "We have a collision!" << std::endl;
+                }
+            }
         }
     }
 };

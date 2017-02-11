@@ -4,6 +4,7 @@
 
 #include "collisions.h"
 
+// TODO: support more collision types
 extern bool collision_overlap(Collider* coll1 , Collider* coll2)
 {
     if(coll1->type == AABB_c && coll2->type == AABB_c)

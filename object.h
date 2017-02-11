@@ -19,6 +19,7 @@ private:
 protected:
     std::vector<vector2d*> forces;
     double mass;
+    Collider* collider;
 
 public:
     Object()
@@ -32,6 +33,10 @@ public:
     {
         delete(position);
         delete(start_velocity);
+        delete(collider);
+
+        for(vector2d* force : forces)
+            delete(force);
 //        delete(forces);
     }
 
@@ -42,6 +47,7 @@ public:
         this->start_velocity = start_velocity;
     }
 
+    // credit to Isaac Newton
     virtual void calculate(double time)
     {
         vector2d* force_sum = new vector2d(0, 0);
@@ -51,8 +57,6 @@ public:
             force_sum = *force_sum + *force;
         }
 
-//        std::cout << "accel: " << std::endl;
-
         vector2d* acceleration = new vector2d(0, 0);
 
         if(mass > 0)
@@ -61,20 +65,25 @@ public:
             acceleration = *force_sum / mass;
         }
 
-//        acceleration->print();
-
         double x = get_position().x + get_velocity().x * time + (acceleration->x * time * time) / 2;
         double y = get_position().y + get_velocity().y * time + (acceleration->y * time * time) / 2;
-
-//        std::cout << y << " " << "time: " << time << std::endl;
 
         set_x(x);
         set_y(y);
 
         delete(force_sum);
+
+        update_collider();
     }
 
     virtual void draw(SDL_Surface* surface) = 0;
+
+    virtual void update_collider() = 0;
+
+    virtual Collider* get_collider()
+    {
+        return collider;
+    }
 
     const vector2d& get_position()
     {
