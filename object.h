@@ -71,9 +71,9 @@ public:
         set_x(x);
         set_y(y);
 
-        delete(force_sum);
-
         update_collider();
+
+        delete(force_sum);
     }
 
     virtual void draw(SDL_Surface* surface) = 0;

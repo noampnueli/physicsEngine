@@ -17,10 +17,13 @@ extern bool collision_overlap(Collider* coll1 , Collider* coll2)
         double dx2 = n_coll1->min.x - n_coll2->max.x;
         double dy2 = n_coll1->min.y - n_coll2->max.y;
 
-        if (dx1 > 0 || dy1 > 0)
+        if(dx1 > 0 || dy1 > 0)
             return false;
 
-        return !(dx2 > 0 || dy2 > 0);
+        if(dx2 > 0 || dy2 > 0)
+            return false;
+
+        return true;
     }
     return false;
 }

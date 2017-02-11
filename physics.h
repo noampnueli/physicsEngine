@@ -7,7 +7,7 @@
 
 #include "renderer.h"
 
-#define RUN_TIME 3
+#define RUN_TIME 1
 #define GRAVITY 9.807
 
 class Physics
@@ -66,10 +66,12 @@ public:
         {
             for(int k = 0; k < stage.size(); k++)
             {
-                if(collision_overlap(stage[i]->get_collider(), stage[k]->get_collider()))
+                if(i != k)
                 {
-                    // Collide!
-                    std::cout << "We have a collision!" << std::endl;
+                    if (collision_overlap(stage[i]->get_collider(), stage[k]->get_collider())) {
+                        // Collide!
+                        std::cout << "We have a collision!" << std::endl;
+                    }
                 }
             }
         }

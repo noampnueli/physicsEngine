@@ -28,8 +28,8 @@ public:
     virtual void update_collider()
     {
         AABB* collider_n = (AABB*) collider;
-        collider_n->min = vector2d(get_position().x, get_position().y);
-        collider_n->max = vector2d(get_position().x + width , get_position().y + height);
+        collider_n->min = vector2d((int) get_position().x, (int) get_position().y);
+        collider_n->max = vector2d((int) get_position().x + width , (int) get_position().y + height);
     }
 };
 

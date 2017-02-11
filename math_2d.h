@@ -13,7 +13,7 @@ public:
     double x;
     double y;
 
-    vector2d() { }
+    vector2d() { x = 0; y = 0;}
 
     vector2d(double _x, double _y)
     {
