@@ -12,20 +12,20 @@
 
 class Renderer {
 private:
-    std::vector<object*> stage;
+    std::vector<Object*> stage;
     const int SCREEN_WIDTH = 640;
     const int SCREEN_HEIGHT = 480;
     SDL_Window* window = NULL;
     SDL_Surface* screen_surface = NULL;
 
 public:
-    Renderer(std::vector<object*>& stage);
+    Renderer(std::vector<Object*>& stage);
 
     ~Renderer();
 
     void render();
 
-    void add_object(object* obj);
+    void add_object(Object* obj);
 };
 
 

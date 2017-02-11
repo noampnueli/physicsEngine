@@ -9,9 +9,9 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    vector<object*> stage;
+    vector<Object*> stage;
 
-    object* box = new Box(1, new vector2f(5, 0), new vector2f(0, 0), 100, 100);
+    Object* box = new Box(10, new vector2f(5, 0), new vector2f(0, 0), 100, 100);
     box->add_force(new vector2f(0, 2));
     stage.push_back(box);
 
@@ -25,7 +25,7 @@ int main(int argc, char** argv)
         std::time_t now = std::time(nullptr);
         dt = now - start_point;
 
-        for(object* obj : stage)
+        for(Object* obj : stage)
         {
             obj->calculate(dt);
         }

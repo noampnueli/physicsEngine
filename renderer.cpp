@@ -5,7 +5,7 @@
 #include "renderer.h"
 #include <iostream>
 
-Renderer::Renderer(std::vector<object*>& stage) {
+Renderer::Renderer(std::vector<Object*>& stage) {
     this->stage = stage;
 
     SDL_Init(SDL_INIT_VIDEO);
@@ -36,7 +36,7 @@ void Renderer::render() {
 
     SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
 
-    for(object* obj : stage)
+    for(Object* obj : stage)
     {
         obj->draw(this->screen_surface);
     }
@@ -45,7 +45,7 @@ void Renderer::render() {
 }
 
 
-void Renderer::add_object(object* obj) {
+void Renderer::add_object(Object* obj) {
     stage.push_back(obj);
 }
 

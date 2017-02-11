@@ -8,14 +8,14 @@
 
 #include "object.h"
 
-class Box : public object
+class Box : public Object
 {
 public:
     const int width;
     const int height;
 
     Box(int mass, vector2f* start_pos, vector2f* start_vel, int width, int height) : width(width), height(height),
-                                                                                   object(mass, start_pos, start_vel)
+                                                                                   Object(mass, start_pos, start_vel)
     { }
 
     virtual void calculate(double time)

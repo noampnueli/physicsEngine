@@ -10,7 +10,7 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-class object
+class Object
 {
 private:
     vector2f* position;
@@ -21,21 +21,21 @@ protected:
     double mass;
 
 public:
-    object()
+    Object()
     {
         position = new vector2f(0, 0);
         curr_velocity = new vector2f(0, 0);
         mass = 0;
     }
 
-    ~object()
+    ~Object()
     {
         delete(position);
         delete(curr_velocity);
 //        delete(forces);
     }
 
-    object(double mass, vector2f* position, vector2f* start_velocity)
+    Object(double mass, vector2f* position, vector2f* start_velocity)
     {
         this->mass = mass;
         this->position = position;
