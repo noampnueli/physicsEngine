@@ -1,9 +1,9 @@
-#include <iostream>
 #include <ctime>
 #include "renderer.h"
 #include "box.h"
 
-#define RUN_TIME 5
+#define RUN_TIME 3
+#define GRAVITY 9.807
 
 using namespace std;
 
@@ -11,19 +11,20 @@ int main(int argc, char** argv)
 {
     vector<Object*> stage;
 
-    Object* box = new Box(10, new vector2f(5, 0), new vector2f(0, 0), 100, 100);
-    box->add_force(new vector2f(0, 2));
+    Object* box = new Box(100, new vector2d(20, 0), new vector2d(0, 0), 100, 100);
+    box->add_force(new vector2d(0, 10 * GRAVITY));
     stage.push_back(box);
 
     Renderer* renderer = new Renderer(stage);
 
-    std::time_t start_point = std::time(nullptr);
+    clock_t start_point = clock();
     double dt = 0;
 
     while(dt < RUN_TIME)
     {
-        std::time_t now = std::time(nullptr);
-        dt = now - start_point;
+        clock_t now = clock();
+
+        dt = double(now - start_point) / CLOCKS_PER_SEC;
 
         for(Object* obj : stage)
         {

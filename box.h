@@ -14,23 +14,28 @@ public:
     const int width;
     const int height;
 
-    Box(int mass, vector2f* start_pos, vector2f* start_vel, int width, int height) : width(width), height(height),
+    Box(int mass, vector2d* start_pos, vector2d* start_vel, int width, int height) : width(width), height(height),
                                                                                    Object(mass, start_pos, start_vel)
     { }
 
     virtual void calculate(double time)
     {
-        vector2f* force_sum = new vector2f(0, 0);
+        vector2d* force_sum = new vector2d(0, 0);
 
-        for(vector2f* force : forces)
+        for(vector2d* force : forces)
         {
             force_sum = *force_sum + *force;
         }
 
-        vector2f* acceleration = *force_sum / mass;
+//        std::cout << "accel: " << std::endl;
+        vector2d* acceleration = *force_sum / mass;
+
+//        acceleration->print();
 
         double x = get_position().x + get_velocity().x * time + (acceleration->x * time * time) / 2;
         double y = get_position().y + get_velocity().y * time + (acceleration->y * time * time) / 2;
+
+//        std::cout << y << " " << "time: " << time << std::endl;
 
         set_x(x);
         set_y(y);

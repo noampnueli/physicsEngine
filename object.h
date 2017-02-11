@@ -13,18 +13,18 @@
 class Object
 {
 private:
-    vector2f* position;
-    vector2f* curr_velocity;
+    vector2d* position;
+    vector2d* curr_velocity;
 
 protected:
-    std::vector<vector2f*> forces;
+    std::vector<vector2d*> forces;
     double mass;
 
 public:
     Object()
     {
-        position = new vector2f(0, 0);
-        curr_velocity = new vector2f(0, 0);
+        position = new vector2d(0, 0);
+        curr_velocity = new vector2d(0, 0);
         mass = 0;
     }
 
@@ -35,7 +35,7 @@ public:
 //        delete(forces);
     }
 
-    Object(double mass, vector2f* position, vector2f* start_velocity)
+    Object(double mass, vector2d* position, vector2d* start_velocity)
     {
         this->mass = mass;
         this->position = position;
@@ -46,17 +46,17 @@ public:
 
     virtual void draw(SDL_Surface* surface) = 0;
 
-    const vector2f& get_position()
+    const vector2d& get_position()
     {
         return *position;
     }
 
-    const vector2f& get_velocity()
+    const vector2d& get_velocity()
     {
         return *curr_velocity;
     }
 
-    void set_position(vector2f& pos)
+    void set_position(vector2d& pos)
     {
         *position = pos;
     }
@@ -71,7 +71,7 @@ public:
         position->y = y;
     }
 
-    void add_force(vector2f* force)
+    void add_force(vector2d* force)
     {
         forces.push_back(force);
     }

@@ -3,7 +3,6 @@
 //
 
 #include "renderer.h"
-#include <iostream>
 
 Renderer::Renderer(std::vector<Object*>& stage) {
     this->stage = stage;
