@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 {
     vector<Object*> stage;
 
-    Object* box = new Box(100, new vector2d(20, 0), new vector2d(0, 0), 100, 100);
+    Object* box = new Box(10, new vector2d(20, 0), new vector2d(0, 0), 100, 100);
     box->add_force(new vector2d(0, 10 * GRAVITY));
     stage.push_back(box);
 
@@ -33,6 +33,8 @@ int main(int argc, char** argv)
 
         renderer->render();
     }
+
+    delete(renderer);
 
     return 0;
 }

@@ -44,7 +44,7 @@ public:
     virtual void draw(SDL_Surface* surface)
     {
         SDL_Rect rect = {(int) get_position().x, (int) get_position().y, width, height};
-        SDL_FillRect(surface, &rect, SDL_MapRGB(surface->format, 0x00, 0x00, 0x00));
+        SDL_FillRect(surface, &rect, SDL_MapRGB(surface->format, 0x2b, 0x2c, 0x2d));
     }
 };
 
