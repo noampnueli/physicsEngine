@@ -23,38 +23,6 @@ public:
         collider.max = vector2d(width, height);
     }
 
-    virtual void calculate(double time)
-    {
-        vector2d* force_sum = new vector2d(0, 0);
-
-        for(vector2d* force : forces)
-        {
-            force_sum = *force_sum + *force;
-        }
-
-//        std::cout << "accel: " << std::endl;
-
-        vector2d* acceleration = new vector2d(0, 0);
-
-        if(mass > 0)
-        {
-            delete(acceleration);
-            acceleration = *force_sum / mass;
-        }
-
-//        acceleration->print();
-
-        double x = get_position().x + get_velocity().x * time + (acceleration->x * time * time) / 2;
-        double y = get_position().y + get_velocity().y * time + (acceleration->y * time * time) / 2;
-
-//        std::cout << y << " " << "time: " << time << std::endl;
-
-        set_x(x);
-        set_y(y);
-
-        delete(force_sum);
-    }
-
     virtual void draw(SDL_Surface* surface)
     {
         SDL_Rect rect = {(int) get_position().x, (int) get_position().y, width, height};

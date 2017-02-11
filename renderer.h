@@ -7,14 +7,14 @@
 
 
 #include "object.h"
-#include <vector>
-#include <SDL2/SDL.h>
 
 class Renderer {
 private:
     std::vector<Object*> stage;
+
     const int SCREEN_WIDTH = 640;
     const int SCREEN_HEIGHT = 480;
+
     SDL_Window* window = NULL;
     SDL_Surface* screen_surface = NULL;
 
