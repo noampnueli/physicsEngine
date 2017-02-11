@@ -14,7 +14,7 @@ class Object
 {
 private:
     vector2d* position;
-    vector2d* curr_velocity;
+    vector2d* start_velocity;
 
 protected:
     std::vector<vector2d*> forces;
@@ -24,14 +24,14 @@ public:
     Object()
     {
         position = new vector2d(0, 0);
-        curr_velocity = new vector2d(0, 0);
+        start_velocity = new vector2d(0, 0);
         mass = 0;
     }
 
     ~Object()
     {
         delete(position);
-        delete(curr_velocity);
+        delete(start_velocity);
 //        delete(forces);
     }
 
@@ -39,7 +39,7 @@ public:
     {
         this->mass = mass;
         this->position = position;
-        this->curr_velocity = start_velocity;
+        this->start_velocity = start_velocity;
     }
 
     virtual void calculate(double time) = 0;
@@ -53,7 +53,7 @@ public:
 
     const vector2d& get_velocity()
     {
-        return *curr_velocity;
+        return *start_velocity;
     }
 
     void set_position(vector2d& pos)
@@ -74,6 +74,11 @@ public:
     void add_force(vector2d* force)
     {
         forces.push_back(force);
+    }
+
+    double get_mass()
+    {
+        return mass;
     }
 };
 

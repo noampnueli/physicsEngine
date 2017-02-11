@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/collisions.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/collisions.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physics.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/box.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/renderer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/renderer.cpp" isTestSource="false" />

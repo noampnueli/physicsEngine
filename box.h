@@ -33,7 +33,14 @@ public:
         }
 
 //        std::cout << "accel: " << std::endl;
-        vector2d* acceleration = *force_sum / mass;
+
+        vector2d* acceleration = new vector2d(0, 0);
+
+        if(mass > 0)
+        {
+            delete(acceleration);
+            acceleration = *force_sum / mass;
+        }
 
 //        acceleration->print();
 
@@ -44,6 +51,8 @@ public:
 
         set_x(x);
         set_y(y);
+
+        delete(force_sum);
     }
 
     virtual void draw(SDL_Surface* surface)

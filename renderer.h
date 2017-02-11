@@ -1,5 +1,5 @@
 //
-// Created by bubz on 2/11/17.
+// Created by Noam pnueli on 2/11/17.
 //
 
 #ifndef GRAPHICSTEST_RENDERER_H
