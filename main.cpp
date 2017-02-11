@@ -1,51 +1,37 @@
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <ctime>
+#include "renderer.h"
+#include "box.h"
+
+#define RUN_TIME 5
 
 using namespace std;
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-extern "C" int main(int argc, char** argv)
+int main(int argc, char** argv)
 {
-    SDL_Window* window = NULL;
+    vector<object*> stage;
 
-    SDL_Surface* screenSurface = NULL;
+    object* box = new Box(1, new vector2f(5, 0), new vector2f(0, 0), 100, 100);
+    box->add_force(new vector2f(0, 2));
+    stage.push_back(box);
 
-    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    Renderer* renderer = new Renderer(stage);
+
+    std::time_t start_point = std::time(nullptr);
+    double dt = 0;
+
+    while(dt < RUN_TIME)
     {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-    }
-    else
-    {
-        //Create window
-        window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
-                                  SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (window == NULL)
+        std::time_t now = std::time(nullptr);
+        dt = now - start_point;
+
+        for(object* obj : stage)
         {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+            obj->calculate(dt);
         }
-        else
-        {
-            //Get window surface
-            screenSurface = SDL_GetWindowSurface( window );
 
-            //Fill the surface white
-            SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
-
-            //Update the surface
-            SDL_UpdateWindowSurface( window );
-
-            //Wait two seconds
-            SDL_Delay( 2000 );
-        }
+        renderer->render();
     }
-
-    //Destroy window
-    SDL_DestroyWindow( window );
-
-    //Quit SDL subsystems
-    SDL_Quit();
 
     return 0;
 }

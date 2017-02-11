@@ -8,13 +8,15 @@
 
 #include "object.h"
 
-class box : object
+class Box : public object
 {
 public:
     const int width;
     const int height;
 
-    box(int width, int height) : width(width), height(height) {}
+    Box(int mass, vector2f* start_pos, vector2f* start_vel, int width, int height) : width(width), height(height),
+                                                                                   object(mass, start_pos, start_vel)
+    { }
 
     virtual void calculate(double time)
     {
@@ -34,9 +36,10 @@ public:
         set_y(y);
     }
 
-    virtual void draw()
+    virtual void draw(SDL_Surface* surface)
     {
-
+        SDL_Rect rect = {(int) get_position().x, (int) get_position().y, width, height};
+        SDL_FillRect(surface, &rect, SDL_MapRGB(surface->format, 0x00, 0x00, 0x00));
     }
 };
 

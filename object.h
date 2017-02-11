@@ -8,6 +8,7 @@
 
 #include "math_2d.h"
 #include <vector>
+#include <SDL2/SDL.h>
 
 class object
 {
@@ -18,9 +19,6 @@ private:
 protected:
     std::vector<vector2f*> forces;
     double mass;
-
-    virtual void calculate(double time) = 0;
-    virtual void draw() = 0;
 
 public:
     object()
@@ -43,6 +41,10 @@ public:
         this->position = position;
         this->curr_velocity = start_velocity;
     }
+
+    virtual void calculate(double time) = 0;
+
+    virtual void draw(SDL_Surface* surface) = 0;
 
     const vector2f& get_position()
     {
@@ -69,9 +71,9 @@ public:
         position->y = y;
     }
 
-    void add_force(vector2f& force)
+    void add_force(vector2f* force)
     {
-        forces.push_back(&force);
+        forces.push_back(force);
     }
 };
 
