@@ -69,10 +69,10 @@ public:
             force_sum = *force_sum + *force;
         }
 
-//        for(vector2d* temp_force : tmp_forces)
-//        {
-//
-//        }
+        for(vector2d* temp_force : tmp_forces)
+        {
+            force_sum = *force_sum + *temp_force;
+        }
 
         vector2d* acceleration = new vector2d(0, 0);
 
@@ -90,7 +90,6 @@ public:
         double x = position->x + velocity->x * time + (acceleration->x * time * time) / 2;
         double y = position->y + velocity->y * time + (acceleration->y * time * time) / 2;
 
-//        std::cout << "X: " << x << " Y: " << y << std::endl;
         set_x(x);
         set_y(y);
 
@@ -99,6 +98,7 @@ public:
         update_collider();
 
         delete(force_sum);
+        tmp_forces.clear();
     }
 
     virtual void draw(SDL_Surface* surface) = 0;

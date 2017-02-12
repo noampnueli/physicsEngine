@@ -8,7 +8,7 @@
 #include "renderer.h"
 #include "constraints.h"
 
-#define RUN_TIME 3
+#define RUN_TIME 5
 #define GRAVITY 9.807
 
 class Physics
@@ -79,6 +79,9 @@ public:
                         std::cout << "We have a collision!" << std::endl;
                         Object* this_obj = stage[i];
                         Object* other = stage[k];
+
+//                        this_obj->add_tmp_force(*other->get_force_sum() * -1);
+//                        other->add_tmp_force(*this_obj->get_force_sum() * -1);
                     }
                 }
             }
