@@ -47,6 +47,18 @@ public:
         this->start_velocity = start_velocity;
     }
 
+    vector2d* get_force_sum()
+    {
+        vector2d* force_sum = new vector2d(0, 0);
+
+        for(vector2d* force : forces)
+        {
+            force_sum = *force_sum + *force;
+        }
+
+        return force_sum;
+    }
+
     // credit to Isaac Newton
     virtual void calculate(double time)
     {
@@ -65,8 +77,8 @@ public:
             acceleration = *force_sum / mass;
         }
 
-        double x = get_position().x + get_velocity().x * time + (acceleration->x * time * time) / 2;
-        double y = get_position().y + get_velocity().y * time + (acceleration->y * time * time) / 2;
+        double x = get_position()->x + get_velocity().x * time + (acceleration->x * time * time) / 2;
+        double y = get_position()->y + get_velocity().y * time + (acceleration->y * time * time) / 2;
 
         set_x(x);
         set_y(y);
@@ -85,9 +97,9 @@ public:
         return collider;
     }
 
-    const vector2d& get_position()
+    vector2d* get_position()
     {
-        return *position;
+        return position;
     }
 
     const vector2d& get_velocity()
@@ -95,9 +107,9 @@ public:
         return *start_velocity;
     }
 
-    void set_position(vector2d& pos)
+    void set_position(vector2d* pos)
     {
-        *position = pos;
+        position = pos;
     }
 
     void set_x(double x)

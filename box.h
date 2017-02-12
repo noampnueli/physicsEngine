@@ -21,15 +21,15 @@ public:
 
     virtual void draw(SDL_Surface* surface)
     {
-        SDL_Rect rect = {(int) get_position().x, (int) get_position().y, width, height};
+        SDL_Rect rect = {(int) get_position()->x, (int) get_position()->y, width, height};
         SDL_FillRect(surface, &rect, SDL_MapRGB(surface->format, 0x2b, 0x2c, 0x2d));
     }
 
     virtual void update_collider()
     {
         AABB* collider_n = (AABB*) collider;
-        collider_n->min = vector2d((int) get_position().x, (int) get_position().y);
-        collider_n->max = vector2d((int) get_position().x + width , (int) get_position().y + height);
+        collider_n->min = vector2d((int) get_position()->x, (int) get_position()->y);
+        collider_n->max = vector2d((int) get_position()->x + width , (int) get_position()->y + height);
     }
 };
 

@@ -42,6 +42,24 @@ public:
         return this;
     }
 
+    vector2d* operator* (double scalar)
+    {
+        this->x *= scalar;
+        this->y *= scalar;
+        return this;
+    }
+
+    double operator* (vector2d& vec)
+    {
+        return x * vec.x + y * vec.y;
+    }
+
+    void zero()
+    {
+        x = 0;
+        y = 0;
+    }
+
     void print()
     {
         std::cout << "X: " << x << " Y: " << y << std::endl;
