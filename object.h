@@ -83,14 +83,18 @@ public:
         }
 
 
-        velocity = *(*acceleration * time) + *velocity;
+        // TODO: think of a more reasonable way
+        if(time < 0.1)
+            time *= 20;
 
         double x = position->x + velocity->x * time + (acceleration->x * time * time) / 2;
         double y = position->y + velocity->y * time + (acceleration->y * time * time) / 2;
 
-//        std::cout << "X: " << x << "Y: " << y << std::endl;
+//        std::cout << "X: " << x << " Y: " << y << std::endl;
         set_x(x);
         set_y(y);
+
+        velocity = *velocity + *(*acceleration * time);
 
         update_collider();
 

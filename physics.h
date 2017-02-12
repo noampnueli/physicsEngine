@@ -50,7 +50,6 @@ public:
             start_point += now / CLOCKS_PER_SEC;
 
             double dt = (now - last) / CLOCKS_PER_SEC;
-//            dt *= 100;
 
             for(Object* obj : stage)
             {
@@ -60,6 +59,8 @@ public:
             calculate_collisions();
 
             renderer->render();
+
+            last = now;
         }
     }
 
