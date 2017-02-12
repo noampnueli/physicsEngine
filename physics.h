@@ -8,7 +8,7 @@
 #include "renderer.h"
 #include "constraints.h"
 
-#define RUN_TIME 1
+#define RUN_TIME 3
 #define GRAVITY 9.807
 
 class Physics
@@ -40,14 +40,17 @@ public:
 
     void run()
     {
-        clock_t start_point = clock();
-        double dt = 0;
+        double start_point = 0;
+        double last = 0;
 
-        while(dt < RUN_TIME)
+        while(start_point < RUN_TIME)
         {
             clock_t now = clock();
 
-            dt = double(now - start_point) / CLOCKS_PER_SEC;
+            start_point += now / CLOCKS_PER_SEC;
+
+            double dt = (now - last) / CLOCKS_PER_SEC;
+//            dt *= 100;
 
             for(Object* obj : stage)
             {
@@ -60,7 +63,7 @@ public:
         }
     }
 
-    //TODO: use a more efficient algorithm - O(n^2) for now :(
+    // TODO: use a more efficient algorithm - O(n^2) for now :(
     void calculate_collisions()
     {
         for(int i = 0; i < stage.size(); i++)
@@ -69,7 +72,8 @@ public:
             {
                 if(i != k)
                 {
-                    if (collision_overlap(stage[i]->get_collider(), stage[k]->get_collider())) {
+                    if(collision_overlap(stage[i]->get_collider(), stage[k]->get_collider()))
+                    {
                         // Collide!
                         std::cout << "We have a collision!" << std::endl;
                         Object* this_obj = stage[i];
