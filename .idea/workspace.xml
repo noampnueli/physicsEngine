@@ -13,10 +13,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa01aec1-2bad-4bdd-a52d-ef072a381a20" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/bubz.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/bubz.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/box.h" afterPath="$PROJECT_DIR$/box.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/math_2d.h" afterPath="$PROJECT_DIR$/math_2d.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/constraints.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/physicsEngine.iml" afterPath="$PROJECT_DIR$/.idea/physicsEngine.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/object.h" afterPath="$PROJECT_DIR$/object.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/physics.h" afterPath="$PROJECT_DIR$/physics.h" />
     </list>
@@ -74,10 +74,12 @@
       <file leaf-file-name="object.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/object.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="80" column="23" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
+            <state relative-caret-position="80">
+              <caret line="77" column="9" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
               <folding>
                 <element signature="e#110#133#0" expanded="true" />
+                <marker date="1486882443389" expanded="true" signature="188:2454" ph="{...}" />
+                <marker date="1486882443389" expanded="true" signature="1171:1808" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -93,11 +95,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="physics.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="physics.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/physics.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+            <state relative-caret-position="162">
+              <caret line="75" column="49" selection-start-line="75" selection-start-column="49" selection-end-line="75" selection-end-column="49" />
+              <folding>
+                <element signature="e#110#131#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="constraints.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/constraints.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -127,10 +141,11 @@
         <option value="$PROJECT_DIR$/renderer.h" />
         <option value="$PROJECT_DIR$/collisions.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
-        <option value="$PROJECT_DIR$/object.h" />
         <option value="$PROJECT_DIR$/box.h" />
         <option value="$PROJECT_DIR$/math_2d.h" />
+        <option value="$PROJECT_DIR$/object.h" />
         <option value="$PROJECT_DIR$/physics.h" />
+        <option value="$PROJECT_DIR$/constraints.h" />
       </list>
     </option>
   </component>
@@ -487,19 +502,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/object.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="80" column="23" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
+        <state relative-caret-position="80">
+          <caret line="77" column="9" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
           <folding>
             <element signature="e#110#133#0" expanded="true" />
+            <marker date="1486882443389" expanded="true" signature="188:2454" ph="{...}" />
+            <marker date="1486882443389" expanded="true" signature="1171:1808" ph="{...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/box.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -513,6 +522,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/box.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/math_2d.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -523,8 +540,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/physics.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+        <state relative-caret-position="162">
+          <caret line="75" column="49" selection-start-line="75" selection-start-column="49" selection-end-line="75" selection-end-column="49" />
+          <folding>
+            <element signature="e#110#131#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constraints.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>

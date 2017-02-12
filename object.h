@@ -77,8 +77,8 @@ public:
             acceleration = *force_sum / mass;
         }
 
-        double x = get_position()->x + get_velocity().x * time + (acceleration->x * time * time) / 2;
-        double y = get_position()->y + get_velocity().y * time + (acceleration->y * time * time) / 2;
+        double x = get_position()->x + get_velocity()->x * time + (acceleration->x * time * time) / 2;
+        double y = get_position()->y + get_velocity()->y * time + (acceleration->y * time * time) / 2;
 
         set_x(x);
         set_y(y);
@@ -102,9 +102,9 @@ public:
         return position;
     }
 
-    const vector2d& get_velocity()
+    vector2d* get_velocity()
     {
-        return *start_velocity;
+        return start_velocity;
     }
 
     void set_position(vector2d* pos)
