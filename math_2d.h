@@ -21,14 +21,14 @@ public:
         y = _y;
     }
 
-    vector2d* operator+ (vector2d& vec)
+    virtual vector2d* operator+ (vector2d& vec)
     {
         this->x += vec.x;
         this->y += vec.y;
         return this;
     }
 
-    vector2d* operator- (vector2d& vec)
+    virtual vector2d* operator- (vector2d& vec)
     {
         this->x -= vec.x;
         this->y -= vec.y;
@@ -63,6 +63,20 @@ public:
     void print()
     {
         std::cout << "X: " << x << " Y: " << y << std::endl;
+    }
+};
+
+/*
+ * A vector that returns a new vector rather than modifying the vector
+ */
+class vector2d_c : public vector2d
+{
+public:
+    vector2d_c(double _x, double _y) : vector2d(_x, _y) { }
+
+    virtual vector2d_c* operator+ (vector2d& vec)
+    {
+        return new vector2d_c(this->x + vec.x, this->y + vec.y);
     }
 };
 

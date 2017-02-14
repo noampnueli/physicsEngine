@@ -17,6 +17,7 @@ private:
 
     SDL_Window* window = NULL;
     SDL_Surface* screen_surface = NULL;
+    SDL_Renderer* renderer = NULL;
 
 public:
     Renderer(std::vector<Object*>& stage);

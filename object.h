@@ -15,6 +15,7 @@ class Object
 private:
     vector2d* position;
     vector2d* velocity;
+    double angle;
 
 protected:
     std::vector<vector2d*> forces;
@@ -28,6 +29,7 @@ public:
         position = new vector2d(0, 0);
         velocity = new vector2d(0, 0);
         mass = 0;
+        angle = 0;
     }
 
     ~Object()
@@ -45,6 +47,15 @@ public:
         this->mass = mass;
         this->position = position;
         this->velocity = start_velocity;
+        angle = 0;
+    }
+
+    Object(double mass, vector2d* position, vector2d* start_velocity, double angle)
+    {
+        this->mass = mass;
+        this->position = position;
+        this->velocity = start_velocity;
+        this->angle = angle;
     }
 
     vector2d* get_force_sum()
@@ -101,7 +112,7 @@ public:
         tmp_forces.clear();
     }
 
-    virtual void draw(SDL_Surface* surface) = 0;
+    virtual void draw(SDL_Renderer* surface) = 0;
 
     virtual void update_collider() = 0;
 
@@ -148,6 +159,11 @@ public:
     double get_mass()
     {
         return mass;
+    }
+
+    double get_angle()
+    {
+        return angle;
     }
 };
 

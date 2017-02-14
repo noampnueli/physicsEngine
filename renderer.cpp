@@ -18,9 +18,13 @@ Renderer::Renderer(std::vector<Object*>& stage)
     {
         screen_surface = SDL_GetWindowSurface(window);
 
-        SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
+        renderer = SDL_CreateRenderer(window, -1, 0);
 
-        SDL_UpdateWindowSurface(window);
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+        SDL_RenderClear(renderer);
+//        SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
+
+//        SDL_UpdateWindowSurface(window);
     }
 }
 
@@ -36,14 +40,17 @@ Renderer::~Renderer()
 
 void Renderer::render() {
 
-    SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
+//    SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
 
     for(Object* obj : stage)
     {
-        obj->draw(this->screen_surface);
+        obj->draw(this->renderer);
     }
 
-    SDL_UpdateWindowSurface(window);
+    SDL_RenderPresent(renderer);
+//    SDL_UpdateWindowSurface(window);
 }
 
 

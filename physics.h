@@ -8,7 +8,7 @@
 #include "renderer.h"
 #include "constraints.h"
 
-#define RUN_TIME 5
+#define RUN_TIME 10
 #define GRAVITY 9.807
 
 class Physics
@@ -35,7 +35,6 @@ public:
     void add_object(Object* object)
     {
         stage.push_back(object);
-        renderer->add_object(object);
     }
 
     void run()
@@ -80,8 +79,8 @@ public:
                         Object* this_obj = stage[i];
                         Object* other = stage[k];
 
-//                        this_obj->add_tmp_force(*other->get_force_sum() * -1);
-//                        other->add_tmp_force(*this_obj->get_force_sum() * -1);
+                        this_obj->add_tmp_force(*other->get_force_sum() * -1);
+                        other->add_tmp_force(*this_obj->get_force_sum() * -1);
                     }
                 }
             }
