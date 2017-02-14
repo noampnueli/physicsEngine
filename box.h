@@ -61,6 +61,7 @@ public:
     {
 //        SDL_Rect rect = {(int) get_position()->x, (int) get_position()->y, width, height};
 //        SDL_FillRect(surface, &rect, SDL_MapRGB(surface->format, 0x2b, 0x2c, 0x2d));
+
         SDL_SetRenderDrawColor(renderer, 43, 44, 45, SDL_ALPHA_OPAQUE);
 
         SDL_Point points[5] = {
