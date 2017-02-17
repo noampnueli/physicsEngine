@@ -54,6 +54,11 @@ public:
         return x * vec.x + y * vec.y;
     }
 
+    vector2d* get_perpendicular()
+    {
+        return new vector2d(y, -x);
+    }
+
     void zero()
     {
         x = 0;
@@ -77,6 +82,11 @@ public:
     virtual vector2d_c* operator+ (vector2d& vec)
     {
         return new vector2d_c(this->x + vec.x, this->y + vec.y);
+    }
+
+    virtual vector2d_c* operator- (vector2d& vec)
+    {
+        return new vector2d_c(this->x - vec.x, this->y - vec.y);
     }
 };
 

@@ -72,15 +72,19 @@ public:
             {
                 if(i != k)
                 {
-                    if(collision_overlap(stage[i]->get_collider(), stage[k]->get_collider()))
+                    if(broad_collision_overlap(stage[i]->get_collider(), stage[k]->get_collider()))
                     {
                         // Collide!
-                        std::cout << "We have a collision!" << std::endl;
+//                        std::cout << "We have a potential collision!" << std::endl;
                         Object* this_obj = stage[i];
                         Object* other = stage[k];
 
-                        this_obj->add_tmp_force(*other->get_force_sum() * -1);
-                        other->add_tmp_force(*this_obj->get_force_sum() * -1);
+                        if(narrow_collision_overlap(this_obj, other))
+                        {
+                            std::cout << "We have an actual collision!" << std::endl;
+                        }
+//                        this_obj->add_tmp_force(*other->get_force_sum() * -1);
+//                        other->add_tmp_force(*this_obj->get_force_sum() * -1);
                     }
                 }
             }

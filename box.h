@@ -22,10 +22,10 @@
 class Box : public Object
 {
 private:
-    vector2d* point1;
-    vector2d* point2;
-    vector2d* point3;
-    vector2d* point4;
+    vector2d_c* point1;
+    vector2d_c* point2;
+    vector2d_c* point3;
+    vector2d_c* point4;
 
     void update_points()
     {
@@ -39,6 +39,12 @@ private:
         point2 = *point1 + transform1;
         point3 = *point1 + transform2;
         point4 = *point2 + transform2;
+
+        // I'm sorry
+        points[0] = point1;
+        points[1] = point2;
+        points[2] = point3;
+        points[3] = point4;
     }
 
 public:
@@ -49,12 +55,14 @@ public:
                                                                                    Object(mass, start_pos, start_vel)
     {
         collider = new AABB();
+        points = {point1, point2, point3, point4};
     }
 
     Box(int mass, vector2d* start_pos, vector2d* start_vel, int width, int height, double angle) : width(width), height(height),
                                                                                      Object(mass, start_pos, start_vel, angle)
     {
         collider = new AABB();
+        points = {point1, point2, point3, point4};
     }
 
     virtual void draw(SDL_Renderer* renderer)
@@ -81,7 +89,8 @@ public:
 
         AABB* collider_n = (AABB*) collider;
         collider_n->min = vector2d((int) get_position()->x, (int) get_position()->y);
-        collider_n->max = vector2d(point4->x, point4->y);
+//        collider_n->max = vector2d(point4->x, point4->y);
+        collider_n->max = vector2d(get_position()->x + width, get_position()->y + height);
     }
 };
 

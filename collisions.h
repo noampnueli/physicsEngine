@@ -24,6 +24,6 @@ public:
     AABB() { this->type = AABB_c; }
 };
 
-extern bool collision_overlap(Collider* coll1 , Collider* coll2);
+bool broad_collision_overlap(Collider* coll1, Collider* coll2);
 
 #endif //GRAPHICSTEST_COLLISIONS_H

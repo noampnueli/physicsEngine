@@ -22,6 +22,7 @@ protected:
     std::vector<vector2d*> tmp_forces;
     double mass;
     Collider* collider;
+    std::vector<vector2d_c*> points;
 
 public:
     Object()
@@ -34,9 +35,7 @@ public:
 
     ~Object()
     {
-        delete(position);
-        delete(velocity);
-        delete(collider);
+        delete(position, velocity, collider);
 
         for(vector2d* force : forces)
             delete(force);
@@ -165,7 +164,14 @@ public:
     {
         return angle;
     }
+
+    std::vector<vector2d_c*> get_points()
+    {
+        return points;
+    }
 };
+
+bool narrow_collision_overlap(Object* obj1, Object* obj2);
 
 
 #endif //GRAPHICSTEST_OBJECT_H
