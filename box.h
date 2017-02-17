@@ -27,7 +27,7 @@ private:
     vector2d_c* point3;
     vector2d_c* point4;
 
-    void update_points()
+    void update_vertices()
     {
         delete(point1, point2, point3, point4);
 
@@ -41,10 +41,10 @@ private:
         point4 = *point2 + transform2;
 
         // I'm sorry
-        points[0] = point1;
-        points[1] = point2;
-        points[2] = point3;
-        points[3] = point4;
+        vertices[0] = point1;
+        vertices[1] = point2;
+        vertices[2] = point3;
+        vertices[3] = point4;
     }
 
 public:
@@ -55,14 +55,14 @@ public:
                                                                                    Object(mass, start_pos, start_vel)
     {
         collider = new AABB();
-        points = {point1, point2, point3, point4};
+        vertices = {point1, point2, point3, point4};
     }
 
     Box(int mass, vector2d* start_pos, vector2d* start_vel, int width, int height, double angle) : width(width), height(height),
                                                                                      Object(mass, start_pos, start_vel, angle)
     {
         collider = new AABB();
-        points = {point1, point2, point3, point4};
+        vertices = {point1, point2, point3, point4};
     }
 
     virtual void draw(SDL_Renderer* renderer)
@@ -72,7 +72,7 @@ public:
 
         SDL_SetRenderDrawColor(renderer, 43, 44, 45, SDL_ALPHA_OPAQUE);
 
-        SDL_Point points[5] = {
+        SDL_Point vertices[5] = {
                 {(int) point1->x, (int) point1->y},
                 {(int) point2->x, (int) point2->y},
                 {(int) point4->x, (int) point4->y},
@@ -80,18 +80,24 @@ public:
                 {(int) point1->x, (int) point1->y}
         };
 
-        SDL_RenderDrawLines(renderer, points, 5);
+        SDL_RenderDrawLines(renderer, vertices, 5);
     }
 
     virtual void update_collider()
     {
-        update_points();
+        update_vertices();
 
         AABB* collider_n = (AABB*) collider;
         collider_n->min = vector2d((int) get_position()->x, (int) get_position()->y);
 //        collider_n->max = vector2d(point4->x, point4->y);
         collider_n->max = vector2d(get_position()->x + width, get_position()->y + height);
     }
+
+    virtual double get_moment_inertia()
+    {
+        return mass * (width * width * height * height) / 12;
+    }
+
 };
 
 

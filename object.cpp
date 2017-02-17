@@ -6,15 +6,15 @@
 
 
 bool narrow_collision_overlap(Object *obj1, Object *obj2) {
-    std::vector<vector2d_c*> points1 = obj1->get_points();
-    std::vector<vector2d_c*> points2 = obj2->get_points();
+    std::vector<vector2d_c*> vertices1 = obj1->get_vertices();
+    std::vector<vector2d_c*> vertices2 = obj2->get_vertices();
 
-    for(int i = 0; i < obj1->get_points().size() - 1; i++)
+    for(int i = 0; i < obj1->get_vertices().size() - 1; i++)
     {
-        vector2d* edge = *points1[i + 1] - *points1[i];
+        vector2d* edge = *vertices1[i + 1] - *vertices1[i];
         vector2d* perp = edge->get_perpendicular();
 
-        if(*(*points2[i % points2.size()] - *points1[i]) * *perp < 0)
+        if(*(*vertices2[i % vertices2.size()] - *vertices1[i]) * *perp < 0)
             return true;
 
         delete(edge);

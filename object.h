@@ -22,7 +22,7 @@ protected:
     std::vector<vector2d*> tmp_forces;
     double mass;
     Collider* collider;
-    std::vector<vector2d_c*> points;
+    std::vector<vector2d_c*> vertices;
 
 public:
     Object()
@@ -99,6 +99,8 @@ public:
 
         double x = position->x + velocity->x * time + (acceleration->x * time * time) / 2;
         double y = position->y + velocity->y * time + (acceleration->y * time * time) / 2;
+//        double x = position->x + velocity->x * time;
+//        double y = position->y + velocity->y * time;
 
         set_x(x);
         set_y(y);
@@ -114,6 +116,8 @@ public:
     virtual void draw(SDL_Renderer* surface) = 0;
 
     virtual void update_collider() = 0;
+
+    virtual double get_moment_inertia() = 0;
 
     virtual Collider* get_collider()
     {
@@ -165,9 +169,9 @@ public:
         return angle;
     }
 
-    std::vector<vector2d_c*> get_points()
+    std::vector<vector2d_c*> get_vertices()
     {
-        return points;
+        return vertices;
     }
 };
 
