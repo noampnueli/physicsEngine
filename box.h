@@ -98,6 +98,11 @@ public:
         return mass * (width * width * height * height) / 12;
     }
 
+    virtual vector2d* get_arm_vector()
+    {
+        return new vector2d(width / 2, height / 2);
+    }
+
 };
 
 

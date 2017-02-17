@@ -81,7 +81,7 @@ public:
 
                         if(narrow_collision_overlap(this_obj, other))
                         {
-                            std::cout << "We have an actual collision!" << std::endl;
+//                            std::cout << "We have an actual collision!" << std::endl;
                         }
 //                        this_obj->add_tmp_force(*other->get_force_sum() * -1);
 //                        other->add_tmp_force(*this_obj->get_force_sum() * -1);
