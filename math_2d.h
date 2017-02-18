@@ -9,6 +9,8 @@
 #include <vector>
 #include <cmath>
 
+typedef std::vector<std::vector<double>> mpoints;
+
 class vector2d
 {
 public:
@@ -95,7 +97,7 @@ public:
 class matrix
 {
 private:
-    std::vector<std::vector<double>> points;
+    mpoints points;
     int rows;
     int colons;
 
@@ -118,9 +120,9 @@ public:
         }
     }
 
-    matrix* operator* (matrix& mat)
+    matrix* operator* (matrix* mat)
     {
-        if(mat.rows > this->rows)
+        if(mat->rows > this->rows)
             throw "Invalid matrix multiplication";
 
         matrix* tmp = new matrix(this->rows, this->colons);
@@ -129,7 +131,7 @@ public:
         {
             for(int colon = 0; colon < colons; colon++)
             {
-                tmp->points[row][colon] += tmp->points[row][colon] * mat.points[colon][row];
+                tmp->points[row][colon] += tmp->points[row][colon] * mat->points[colon][row];
             }
         }
         return tmp;
@@ -143,6 +145,11 @@ public:
         vec->y = vec->x * points[1][0] + vec->y * points[1][1];
 
         return vec;
+    }
+
+    const mpoints& get_points()
+    {
+        return (const mpoints) points;
     }
 };
 
