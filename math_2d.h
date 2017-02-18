@@ -106,18 +106,32 @@ public:
         rows = (int) points[0].size();
     }
 
-    matrix* operator* (matrix& mat)
+    matrix(int rows, int colons)
     {
-        if(mat.rows > this->rows)
-            throw "Invalid matrix multiplication";
         for(int row = 0; row < rows; row++)
         {
             for(int colon = 0; colon < colons; colon++)
             {
-                points[row][colon] += points[row][colon] * mat.points[colon][row];
+                points[row][colon] = 0;
             }
         }
-        return this;
+    }
+
+    matrix* operator* (matrix& mat)
+    {
+        if(mat.rows > this->rows)
+            throw "Invalid matrix multiplication";
+
+        matrix* tmp = new matrix(this->rows, this->colons);
+
+        for(int row = 0; row < rows; row++)
+        {
+            for(int colon = 0; colon < colons; colon++)
+            {
+                tmp->points[row][colon] += tmp->points[row][colon] * mat.points[colon][row];
+            }
+        }
+        return tmp;
     }
 };
 
