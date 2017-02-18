@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 class vector2d
 {
@@ -99,7 +100,7 @@ private:
     int colons;
 
 public:
-    matrix(std::vector<std::vector<double>>& points)
+    matrix(const std::vector<std::vector<double>>& points)
     {
         this->points = points;
         colons = (int) points.size();
@@ -133,9 +134,21 @@ public:
         }
         return tmp;
     }
+
+    vector2d* operator*(vector2d* vec)
+    {
+        if(this->colons != 2)
+            throw "Invalid matrix multiplication";
+        vec->x = vec->x * points[0][0] + vec->y * points[0][1];
+        vec->y = vec->x * points[1][0] + vec->y * points[1][1];
+
+        return vec;
+    }
 };
 
 vector2d* rotate(vector2d* point, vector2d* pivot, double angle);
+
+vector2d* rotate(vector2d* point, double angle);
 
 
 #endif //GRAPHICSTEST_MATH_2D_H
