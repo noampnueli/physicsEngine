@@ -6,6 +6,7 @@
 #define GRAPHICSTEST_MATH_2D_H
 
 #include <iostream>
+#include <vector>
 
 class vector2d
 {
@@ -15,10 +16,10 @@ public:
 
     vector2d() { x = 0; y = 0;}
 
-    vector2d(double _x, double _y)
+    vector2d(double x, double y)
     {
-        x = _x;
-        y = _y;
+        this->x = x;
+        this->y = y;
     }
 
     virtual vector2d* operator+ (vector2d& vec)
@@ -89,6 +90,38 @@ public:
         return new vector2d_c(this->x - vec.x, this->y - vec.y);
     }
 };
+
+class matrix
+{
+private:
+    std::vector<std::vector<double>> points;
+    int rows;
+    int colons;
+
+public:
+    matrix(std::vector<std::vector<double>>& points)
+    {
+        this->points = points;
+        colons = (int) points.size();
+        rows = (int) points[0].size();
+    }
+
+    matrix* operator* (matrix& mat)
+    {
+        if(mat.rows > this->rows)
+            throw "Invalid matrix multiplication";
+        for(int row = 0; row < rows; row++)
+        {
+            for(int colon = 0; colon < colons; colon++)
+            {
+                points[row][colon] += points[row][colon] * mat.points[colon][row];
+            }
+        }
+        return this;
+    }
+};
+
+vector2d* rotate(vector2d* point, vector2d* pivot, double angle);
 
 
 #endif //GRAPHICSTEST_MATH_2D_H

@@ -5,6 +5,8 @@
 #ifndef GRAPHICSTEST_OBJECT_H
 #define GRAPHICSTEST_OBJECT_H
 
+#define TORQUE_SENSITIVITY 10000
+
 
 #include "collisions.h"
 #include <vector>
@@ -110,7 +112,7 @@ public:
 
         angular_velocity += angular_acceleration * time;
 
-        angle += angular_velocity * time * 10000;
+        angle += angular_velocity * time * TORQUE_SENSITIVITY;
 
         double x = position->x + velocity->x * time + (acceleration->x * time * time) / 2;
         double y = position->y + velocity->y * time + (acceleration->y * time * time) / 2;
