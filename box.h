@@ -31,7 +31,25 @@ private:
     {
         delete(point1, point2, point3, point4);
 
-        // initializing transform vectors
+        double px = (point1->x + point2->x + point3->x + point4->x) / 4;
+        double py = (point1->y + point2->y + point3->y + point4->y) / 4;
+        vector2d* pivot = new vector2d(px, py);
+
+        point1 = (vector2d_c *) rotate(point1, pivot, angle);
+        point2 = (vector2d_c *) rotate(point2, pivot, angle);
+        point3 = (vector2d_c *) rotate(point3, pivot, angle);
+        point4 = (vector2d_c *) rotate(point4, pivot, angle);
+
+        delete(pivot);
+
+        vertices[0] = point1;
+        vertices[1] = point2;
+        vertices[2] = point3;
+        vertices[3] = point4;
+    }
+
+    void initialize_vertices()
+    {
         vector2d transform1 = vector2d((double) (width * cos(get_angle())), (double) (width * sin(get_angle())));
         vector2d transform2 = vector2d((double) (-height * sin(get_angle())), (double) (height * cos(get_angle())));
 
@@ -40,7 +58,7 @@ private:
         point3 = *point1 + transform2;
         point4 = *point2 + transform2;
 
-        // I'm sorry
+        //I'm sorry
         vertices[0] = point1;
         vertices[1] = point2;
         vertices[2] = point3;
@@ -56,6 +74,7 @@ public:
     {
         collider = new AABB();
         vertices = {point1, point2, point3, point4};
+        initialize_vertices();
     }
 
     Box(int mass, vector2d* start_pos, vector2d* start_vel, int width, int height, double angle) : width(width), height(height),
@@ -63,6 +82,7 @@ public:
     {
         collider = new AABB();
         vertices = {point1, point2, point3, point4};
+        initialize_vertices();
     }
 
     virtual void draw(SDL_Renderer* renderer)

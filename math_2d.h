@@ -98,26 +98,31 @@ class matrix
 {
 private:
     mpoints points;
+//    double points[];
     int rows;
     int colons;
 
 public:
-    matrix(const std::vector<std::vector<double>>& points)
+    matrix(mpoints points)
     {
         this->points = points;
-        colons = (int) points.size();
-        rows = (int) points[0].size();
+        this->rows = (int) points[0].size();
+        this->colons = (int) points.size();
     }
 
     matrix(int rows, int colons)
     {
-        for(int row = 0; row < rows; row++)
+//        points = std::vector<std::vector<double>>((unsigned long) colons, std::vector<double>((unsigned long) rows, 0.0));
+        points = mpoints((unsigned long) colons);
+        for(int i = 0; i < colons; i++)
         {
-            for(int colon = 0; colon < colons; colon++)
-            {
-                points[row][colon] = 0;
-            }
+            points[i] = std::vector<double>((unsigned long) rows);
+            for(int j = 0; j < rows; j++)
+                points[i][j] = 0;
         }
+
+        this->rows = rows;
+        this->colons = colons;
     }
 
     matrix* operator* (matrix* mat)
@@ -131,9 +136,10 @@ public:
         {
             for(int colon = 0; colon < colons; colon++)
             {
-                tmp->points[row][colon] += tmp->points[row][colon] * mat->points[colon][row];
+                tmp->points[row][colon] += this->points[row][colon] * mat->points[colon][row];
             }
         }
+
         return tmp;
     }
 
@@ -149,7 +155,19 @@ public:
 
     const mpoints& get_points()
     {
-        return (const mpoints) points;
+        return points;
+    }
+
+    void print()
+    {
+        for(int row = 0; row < rows; row++)
+        {
+            for(int colon = 0; colon < colons; colon++)
+            {
+                std::cout << "|" << this->points[row][colon];
+            }
+            std::cout << "|\n";
+        }
     }
 };
 

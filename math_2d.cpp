@@ -10,8 +10,8 @@ vector2d* rotate(vector2d *point, vector2d *pivot, double angle)
 {
     // T(-pivot) * R(angle) * T(pivot)
     mpoints tmp_m = {{cos(angle), -sin(angle), cos(angle) * pivot->x - sin(angle) * pivot->y - pivot->x},
-                     {sin(angle), cos(angle), sin(angle) * pivot->x + cos(angle) * pivot->y - pivot->y },
-                     {0         , 0         , 1                                                       }};
+                     {sin(angle), cos(angle) , sin(angle) * pivot->x + cos(angle) * pivot->y - pivot->y},
+                     {0         , 0          , 1                                                       }};
     matrix* mat = new matrix(tmp_m);
 
     // Hacky way to convert 3D vector to 2D vector; Will fix in the future
@@ -22,11 +22,17 @@ vector2d* rotate(vector2d *point, vector2d *pivot, double angle)
 
     tmp_vec = *mat * tmp_vec;
 
+    tmp_vec->print();
+
+    std::cout << "----------------" << std::endl;
+
     delete(point);
 
     // Normalizing returned vector
     double w = tmp_vec->get_points()[0][2];
-    point = new vector2d(tmp_vec->get_points()[0][0] / w, tmp_vec->get_points()[0][1] / w);
+
+    if( w != 0 )
+        point = new vector2d(tmp_vec->get_points()[0][0] / w, tmp_vec->get_points()[0][1] / w);
 
     delete(mat, tmp_vec);
 
