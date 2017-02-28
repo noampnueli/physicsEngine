@@ -20,21 +20,20 @@ vector2d* rotate(vector2d *point, vector2d *pivot, double angle)
                      {1}};
     matrix* tmp_vec = new matrix(tmp_v);
 
-    tmp_vec = *mat * tmp_vec;
+    matrix* product = *mat * tmp_vec;
 
-    tmp_vec->print();
+//    tmp_vec->print();
 
-    std::cout << "----------------" << std::endl;
+//    std::cout << "----------------" << std::endl;
 
-    delete(point);
+    delete(point, tmp_vec, mat);
 
     // Normalizing returned vector
-    double w = tmp_vec->get_points()[0][2];
+    double w = product->get_points()[0][2];
 
     if( w != 0 )
-        point = new vector2d(tmp_vec->get_points()[0][0] / w, tmp_vec->get_points()[0][1] / w);
+        point = new vector2d(product->get_points()[0][0] / w, product->get_points()[0][1] / w);
 
-    delete(mat, tmp_vec);
 
     return point;
 }

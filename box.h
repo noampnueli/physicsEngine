@@ -35,10 +35,28 @@ private:
         double py = (point1->y + point2->y + point3->y + point4->y) / 4;
         vector2d* pivot = new vector2d(px, py);
 
-        point1 = (vector2d_c *) rotate(point1, pivot, angle);
-        point2 = (vector2d_c *) rotate(point2, pivot, angle);
-        point3 = (vector2d_c *) rotate(point3, pivot, angle);
-        point4 = (vector2d_c *) rotate(point4, pivot, angle);
+        vector2d* tmp_point1 = get_position();
+        vector2d* tmp_point2 = new vector2d(get_position()->x + width, get_position()->y);
+        vector2d* tmp_point3 = new vector2d(get_position()->x, get_position()->y + height);
+        vector2d* tmp_point4 = new vector2d(get_position()->x + width, get_position()->y + height);
+
+//        tmp_point1->print();
+
+//        std::cout << angle << std::endl;
+
+        point1 = (vector2d_c *) rotate(point1, pivot, .02);
+        point2 = (vector2d_c *) rotate(point2, pivot, .02);
+        point3 = (vector2d_c *) rotate(point3, pivot, .02);
+        point4 = (vector2d_c *) rotate(point4, pivot, .02);
+
+//        point1->print();
+
+//        point1->print();
+//        point2->print();
+//        point3->print();
+//        point4->print();
+
+//        std::cout << "---------------" << std::endl;
 
         delete(pivot);
 

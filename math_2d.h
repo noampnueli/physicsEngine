@@ -132,11 +132,16 @@ public:
 
         matrix* tmp = new matrix(this->rows, this->colons);
 
-        for(int row = 0; row < rows; row++)
+        double sum = 0;
+
+        for(int a = 0; a < rows; a++)
         {
-            for(int colon = 0; colon < colons; colon++)
+            for(int b = 0; b < colons; b++)
             {
-                tmp->points[row][colon] += this->points[row][colon] * mat->points[colon][row];
+                for(int c = 0; c < colons; c++)
+                    sum += this->points[a][c] * mat->points[b][c];
+                tmp->points[a][b] = sum;
+                sum = 0;
             }
         }
 

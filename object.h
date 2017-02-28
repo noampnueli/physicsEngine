@@ -5,7 +5,7 @@
 #ifndef GRAPHICSTEST_OBJECT_H
 #define GRAPHICSTEST_OBJECT_H
 
-#define TORQUE_SENSITIVITY 10000
+#define TORQUE_SENSITIVITY 100000
 
 
 #include "collisions.h"
