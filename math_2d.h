@@ -106,8 +106,8 @@ public:
     matrix(mpoints points)
     {
         this->points = points;
-        this->rows = (int) points[0].size();
-        this->colons = (int) points.size();
+        this->rows = (int) points.size();
+        this->colons = (int) points[0].size();
     }
 
     matrix(int rows, int colons)
@@ -140,11 +140,10 @@ public:
             {
                 for(int c = 0; c < colons; c++)
                     sum += this->points[a][c] * mat->points[b][c];
-                tmp->points[a][b] = sum;
+                tmp->points[b][a] = sum;
                 sum = 0;
             }
         }
-
         return tmp;
     }
 

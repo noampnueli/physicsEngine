@@ -22,65 +22,31 @@
 class Box : public Object
 {
 private:
-    vector2d_c* point1;
-    vector2d_c* point2;
-    vector2d_c* point3;
-    vector2d_c* point4;
-
     void update_vertices()
     {
-        delete(point1, point2, point3, point4);
+        update_vertex_position();
 
-        double px = (point1->x + point2->x + point3->x + point4->x) / 4;
-        double py = (point1->y + point2->y + point3->y + point4->y) / 4;
+        double px = (vertices[0]->x + vertices[1]->x + vertices[2]->x + vertices[3]->x) / 4;
+        double py = (vertices[0]->y + vertices[1]->y + vertices[2]->y + vertices[3]->y) / 4;
         vector2d* pivot = new vector2d(px, py);
 
-        vector2d* tmp_point1 = get_position();
-        vector2d* tmp_point2 = new vector2d(get_position()->x + width, get_position()->y);
-        vector2d* tmp_point3 = new vector2d(get_position()->x, get_position()->y + height);
-        vector2d* tmp_point4 = new vector2d(get_position()->x + width, get_position()->y + height);
-
-//        tmp_point1->print();
-
-//        std::cout << angle << std::endl;
-
-        point1 = (vector2d_c *) rotate(point1, pivot, .02);
-        point2 = (vector2d_c *) rotate(point2, pivot, .02);
-        point3 = (vector2d_c *) rotate(point3, pivot, .02);
-        point4 = (vector2d_c *) rotate(point4, pivot, .02);
-
-//        point1->print();
-
-//        point1->print();
-//        point2->print();
-//        point3->print();
-//        point4->print();
-
-//        std::cout << "---------------" << std::endl;
-
+        for(int i = 0; i < vertices.size(); i++)
+        {
+//            vertices[i]->print();
+            vertices[i] = (vector2d_c *) rotate(vertices[i], pivot, 0);
+//            vertices[i]->print();
+//            std::cout << "------------" << std::endl;
+        }
+        
         delete(pivot);
-
-        vertices[0] = point1;
-        vertices[1] = point2;
-        vertices[2] = point3;
-        vertices[3] = point4;
     }
 
-    void initialize_vertices()
+    void update_vertex_position()
     {
-        vector2d transform1 = vector2d((double) (width * cos(get_angle())), (double) (width * sin(get_angle())));
-        vector2d transform2 = vector2d((double) (-height * sin(get_angle())), (double) (height * cos(get_angle())));
-
-        point1 = new vector2d_c(get_position()->x, get_position()->y);
-        point2 = *point1 + transform1;
-        point3 = *point1 + transform2;
-        point4 = *point2 + transform2;
-
-        //I'm sorry
-        vertices[0] = point1;
-        vertices[1] = point2;
-        vertices[2] = point3;
-        vertices[3] = point4;
+        vertices[0] = new vector2d_c(get_position()->x, get_position()->y);
+        vertices[1] = new vector2d_c(vertices[0]->x + width, vertices[0]->y);
+        vertices[2] = new vector2d_c(vertices[0]->x, vertices[0]->y + height);
+        vertices[3] = new vector2d_c(vertices[1]->x, vertices[1]->y + height);
     }
 
 public:
@@ -91,34 +57,31 @@ public:
                                                                                    Object(mass, start_pos, start_vel)
     {
         collider = new AABB();
-        vertices = {point1, point2, point3, point4};
-        initialize_vertices();
+        vertices = {0, 0, 0, 0};
+        update_vertex_position();
     }
 
     Box(int mass, vector2d* start_pos, vector2d* start_vel, int width, int height, double angle) : width(width), height(height),
                                                                                      Object(mass, start_pos, start_vel, angle)
     {
         collider = new AABB();
-        vertices = {point1, point2, point3, point4};
-        initialize_vertices();
+        vertices = {0, 0, 0, 0};
+        update_vertex_position();
     }
 
     virtual void draw(SDL_Renderer* renderer)
     {
-//        SDL_Rect rect = {(int) get_position()->x, (int) get_position()->y, width, height};
-//        SDL_FillRect(surface, &rect, SDL_MapRGB(surface->format, 0x2b, 0x2c, 0x2d));
-
         SDL_SetRenderDrawColor(renderer, 43, 44, 45, SDL_ALPHA_OPAQUE);
 
-        SDL_Point vertices[5] = {
-                {(int) point1->x, (int) point1->y},
-                {(int) point2->x, (int) point2->y},
-                {(int) point4->x, (int) point4->y},
-                {(int) point3->x, (int) point3->y},
-                {(int) point1->x, (int) point1->y}
+        SDL_Point sdl_vertices[5] = {
+                {(int) vertices[0]->x, (int) vertices[0]->y},
+                {(int) vertices[1]->x, (int) vertices[1]->y},
+                {(int) vertices[3]->x, (int) vertices[3]->y},
+                {(int) vertices[2]->x, (int) vertices[2]->y},
+                {(int) vertices[0]->x, (int) vertices[0]->y}
         };
 
-        SDL_RenderDrawLines(renderer, vertices, 5);
+        SDL_RenderDrawLines(renderer, sdl_vertices, 5);
     }
 
     virtual void update_collider()
@@ -127,7 +90,6 @@ public:
 
         AABB* collider_n = (AABB*) collider;
         collider_n->min = vector2d((int) get_position()->x, (int) get_position()->y);
-//        collider_n->max = vector2d(point4->x, point4->y);
         collider_n->max = vector2d(get_position()->x + width, get_position()->y + height);
     }
 
