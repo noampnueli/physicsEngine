@@ -5,7 +5,7 @@
 #ifndef GRAPHICSTEST_OBJECT_H
 #define GRAPHICSTEST_OBJECT_H
 
-#define TORQUE_SENSITIVITY 100000
+#define TORQUE_SENSITIVITY 10000
 
 
 #include "collisions.h"
@@ -14,25 +14,23 @@
 
 class Object
 {
-private:
-    vector2d* position;
-    vector2d* velocity;
-
 protected:
     std::vector<vector2d*> forces;
     std::vector<vector2d*> tmp_forces;
     double mass;
     Collider* collider;
-    std::vector<vector2d_c*> vertices;
+    std::vector<vector2d> vertices;
     double torque;
     double angular_velocity;
     double angle;
+    vector2d position;
+    vector2d velocity;
 
 public:
     Object()
     {
-        position = new vector2d(0, 0);
-        velocity = new vector2d(0, 0);
+        position = vector2d(0, 0);
+        velocity = vector2d(0, 0);
         mass = 0;
         angle = 0;
         angular_velocity = 0;
@@ -46,7 +44,7 @@ public:
             delete(force);
     }
 
-    Object(double mass, vector2d* position, vector2d* start_velocity)
+    Object(double mass, vector2d position, vector2d start_velocity)
     {
         this->mass = mass;
         this->position = position;
@@ -55,7 +53,7 @@ public:
         angular_velocity = 0;
     }
 
-    Object(double mass, vector2d* position, vector2d* start_velocity, double angle)
+    Object(double mass, vector2d position, vector2d start_velocity, double angle)
     {
         this->mass = mass;
         this->position = position;
@@ -64,13 +62,13 @@ public:
         angular_velocity = 0;
     }
 
-    vector2d* get_force_sum()
+    vector2d get_force_sum()
     {
-        vector2d* force_sum = new vector2d(0, 0);
+        vector2d force_sum = vector2d(0, 0);
 
         for(vector2d* force : forces)
         {
-            force_sum = *force_sum + *force;
+            force_sum = force_sum + *force;
         }
 
         return force_sum;
@@ -79,24 +77,23 @@ public:
     // credit to Isaac Newton
     virtual void calculate(double time)
     {
-        vector2d* force_sum = new vector2d(0, 0);
+        vector2d force_sum = vector2d(0, 0);
 
         for(vector2d* force : forces)
         {
-            force_sum = *force_sum + *force;
+            force_sum = force_sum + *force;
         }
 
-        for(vector2d* temp_force : tmp_forces)
+        for(vector2d* tmp_force : tmp_forces)
         {
-            force_sum = *force_sum + *temp_force;
+            force_sum = force_sum + *tmp_force;
         }
 
-        vector2d* acceleration = new vector2d(0, 0);
+        vector2d acceleration = vector2d(0, 0);
 
         if(mass > 0)
         {
-            delete(acceleration);
-            acceleration = *force_sum / mass;
+            acceleration = force_sum / mass;
         }
 
 
@@ -105,8 +102,8 @@ public:
             time *= 20;
 
         // Apply natural rotation
-        vector2d* r = get_arm_vector();
-        torque = *r * *force_sum;
+        vector2d r = get_arm_vector();
+        torque = r * force_sum;
 
         double angular_acceleration = torque / get_moment_inertia();
 
@@ -114,19 +111,18 @@ public:
 
         angle += angular_velocity * time * TORQUE_SENSITIVITY;
 
-        double x = position->x + velocity->x * time + (acceleration->x * time * time) / 2;
-        double y = position->y + velocity->y * time + (acceleration->y * time * time) / 2;
-//        double x = position->x + velocity->x * time;
-//        double y = position->y + velocity->y * time;
+        double x = position.x + velocity.x * time + (acceleration.x * time * time) / 2;
+        double y = position.y + velocity.y * time + (acceleration.y * time * time) / 2;
 
         set_x(x);
         set_y(y);
 
-        velocity = *velocity + *(*acceleration * time);
+        vector2d tmp = acceleration * time;
+
+        velocity = velocity + tmp;
 
         update_collider();
 
-        delete(force_sum, r);
         tmp_forces.clear();
     }
 
@@ -136,36 +132,36 @@ public:
 
     virtual double get_moment_inertia() = 0;
 
-    virtual vector2d* get_arm_vector() = 0;
+    virtual vector2d get_arm_vector() = 0;
 
     virtual Collider* get_collider()
     {
         return collider;
     }
 
-    vector2d* get_position()
+    vector2d& get_position()
     {
         return position;
     }
 
-    vector2d* get_velocity()
+    vector2d& get_velocity()
     {
         return velocity;
     }
 
-    void set_position(vector2d* pos)
+    void set_position(vector2d& pos)
     {
         position = pos;
     }
 
     void set_x(double x)
     {
-        position->x = x;
+        position.x = x;
     }
 
     void set_y(double y)
     {
-        position->y = y;
+        position.y = y;
     }
 
     void add_force(vector2d* force)
@@ -188,7 +184,7 @@ public:
         return angle;
     }
 
-    std::vector<vector2d_c*> get_vertices()
+    std::vector<vector2d> get_vertices()
     {
         return vertices;
     }

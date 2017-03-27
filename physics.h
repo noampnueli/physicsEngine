@@ -21,7 +21,7 @@ public:
     {
         for(Object* obj : stage)
         {
-            obj->add_force(new vector2d(0, obj->get_mass() * GRAVITY));
+//            obj->add_force(new vector2d(0, obj->get_mass() * GRAVITY));
         }
     }
 

@@ -10,21 +10,21 @@
 
 class Constraint
 {
-    static vector2d* get_constraint_force(double lagrange_multiplier, vector2d* p)
+    static vector2d get_constraint_force(double lagrange_multiplier, vector2d& p)
     {
-        return *p * lagrange_multiplier;
+        return p * lagrange_multiplier;
     }
 };
 
 class ZeroConstraint : public Constraint
 {
 public:
-    static double calculate_lagrange_multiplier(vector2d* ext_forces, vector2d* position, double mass, vector2d* velocity)
+    static double calculate_lagrange_multiplier(vector2d& ext_forces, vector2d& position, double mass, vector2d& velocity)
     {
-        vector2d* neg_forces = *ext_forces * -1;
-        double dot1 = *neg_forces * *position;
-        double dot2 = *(*velocity * mass) * *velocity;
-        double dot3 = *position * *position;
+        vector2d neg_forces = ext_forces * -1;
+        double dot1 = neg_forces * position;
+        double dot2 = (velocity * mass) * velocity;
+        double dot3 = position * position;
 
         return (dot1 - dot2) / dot3;
     }
