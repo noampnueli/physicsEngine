@@ -13,8 +13,8 @@
 class Object
 {
 protected:
-    std::vector<vector2d*> forces;
-    std::vector<vector2d*> tmp_forces;
+    std::vector<vector2d> forces;
+    std::vector<vector2d> tmp_forces;
     double mass;
     Collider* collider;
     std::vector<vector2d> vertices;
@@ -40,9 +40,6 @@ public:
     ~Object()
     {
         delete(position, velocity, collider);
-
-        for(vector2d* force : forces)
-            delete(force);
     }
 
     Object(double mass, vector2d position, vector2d start_velocity)
@@ -67,9 +64,9 @@ public:
     {
         vector2d force_sum = vector2d(0, 0);
 
-        for(vector2d* force : forces)
+        for(vector2d force : forces)
         {
-            force_sum = force_sum + *force;
+            force_sum = force_sum + force;
         }
 
         return force_sum;
@@ -80,14 +77,14 @@ public:
     {
         vector2d force_sum = vector2d(0, 0);
 
-        for(vector2d* force : forces)
+        for(vector2d force : forces)
         {
-            force_sum = force_sum + *force;
+            force_sum = force_sum + force;
         }
 
-        for(vector2d* tmp_force : tmp_forces)
+        for(vector2d tmp_force : tmp_forces)
         {
-            force_sum = force_sum + *tmp_force;
+            force_sum = force_sum + tmp_force;
         }
 
         vector2d acceleration = vector2d(0, 0);
@@ -165,12 +162,12 @@ public:
         position.y = y;
     }
 
-    void add_force(vector2d* force)
+    void add_force(vector2d force)
     {
         forces.push_back(force);
     }
 
-    void add_tmp_force(vector2d* force)
+    void add_tmp_force(vector2d force)
     {
         tmp_forces.push_back(force);
     }
