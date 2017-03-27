@@ -24,11 +24,11 @@ vector2d rotate(vector2d& point, double angle)
 vector2d rotate(vector2d& point, vector2d& pivot, double angle)
 {
     // Change to radians
-    angle = angle * (180 / PI);
+    angle = angle * (PI / 180);
 
-    // T(-pivot) * R(angle) * T(pivot)
-    mpoints tmp_m = {{cos(angle), -sin(angle), cos(angle) * pivot.x - sin(angle) * pivot.y - pivot.x},
-                     {sin(angle), cos(angle) , sin(angle) * pivot.x + cos(angle) * pivot.y - pivot.y},
+    // T(pivot) * R(angle) * T(-pivot)
+    mpoints tmp_m = {{cos(angle), -sin(angle), -cos(angle) * pivot.x + sin(angle) * pivot.y + pivot.x},
+                     {sin(angle), cos(angle) , -cos(angle) * pivot.y - sin(angle) * pivot.x + pivot.y},
                      {0         , 0          , 1                                                    }};
     matrix mat = matrix(tmp_m);
 

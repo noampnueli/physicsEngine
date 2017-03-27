@@ -5,8 +5,6 @@
 #ifndef GRAPHICSTEST_OBJECT_H
 #define GRAPHICSTEST_OBJECT_H
 
-#define TORQUE_SENSITIVITY 10000
-
 
 #include "collisions.h"
 #include <vector>
@@ -20,9 +18,12 @@ protected:
     double mass;
     Collider* collider;
     std::vector<vector2d> vertices;
+
     double torque;
+    double torque_sensitivity = 10000;
     double angular_velocity;
     double angle;
+
     vector2d position;
     vector2d velocity;
 
@@ -109,7 +110,7 @@ public:
 
         angular_velocity += angular_acceleration * time;
 
-        angle += angular_velocity * time * TORQUE_SENSITIVITY;
+        angle += angular_velocity * time * torque_sensitivity;
 
         double x = position.x + velocity.x * time + (acceleration.x * time * time) / 2;
         double y = position.y + velocity.y * time + (acceleration.y * time * time) / 2;

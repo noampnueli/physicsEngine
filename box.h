@@ -30,7 +30,8 @@ private:
         double py = (vertices[0].y + vertices[1].y + vertices[2].y + vertices[3].y) / 4;
         vector2d pivot = vector2d(px, py);
 
-        rotate(vertices, pivot, 20);
+
+        rotate(vertices, pivot, angle);
 
     }
 
