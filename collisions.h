@@ -7,7 +7,7 @@
 
 #include "math_2d.h"
 
-enum CollType { AABB_c };
+enum CollType { AABB_c, Circle_c };
 
 class Collider
 {
@@ -22,6 +22,15 @@ public:
     vector2d max;
 
     AABB() { this->type = AABB_c; }
+};
+
+class CircleCollider : public Collider
+{
+public:
+	vector2d pos;
+	float radius;
+
+	CircleCollider() { this->type = Circle_c; }
 };
 
 bool broad_collision_overlap(Collider* coll1, Collider* coll2);
