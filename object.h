@@ -27,6 +27,8 @@ protected:
     vector2d position;
     vector2d velocity;
 
+    double restitution = 1;
+
 public:
     Object()
     {
@@ -75,6 +77,11 @@ public:
     // credit to Isaac Newton
     virtual void calculate(double time)
     {
+	if(mass <= 0)
+	{
+	    update_collider();
+	    return;
+	}
         vector2d force_sum = vector2d(0, 0);
 
         for(vector2d force : forces)
@@ -89,10 +96,7 @@ public:
 
         vector2d acceleration = vector2d(0, 0);
 
-        if(mass > 0)
-        {
-            acceleration = force_sum / mass;
-        }
+        acceleration = force_sum / mass;
 
         // Apply natural rotation
         vector2d r = get_arm_vector();
@@ -107,12 +111,15 @@ public:
         double x = position.x + velocity.x * time + (acceleration.x * time * time) / 2;
         double y = position.y + velocity.y * time + (acceleration.y * time * time) / 2;
 
-        set_x(x);
-        set_y(y);
+        //set_x(x);
+        //set_y(y);
 
         vector2d tmp = acceleration * time;
 
         velocity = velocity + tmp;
+
+	set_x(x);
+	set_y(y);
 
         update_collider();
 
@@ -142,9 +149,19 @@ public:
         return velocity;
     }
 
+    double get_restitution()
+    {
+	return restitution;
+    }
+
     void set_position(vector2d& pos)
     {
         position = pos;
+    }
+
+    void set_velocity(vector2d& vel)
+    {
+    	velocity = vel;
     }
 
     void set_x(double x)

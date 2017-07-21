@@ -33,6 +33,9 @@ public:
 		CircleCollider *collider_n = (CircleCollider *)collider;
 		collider_n->pos = this->position;
 		collider_n->radius = radius;
+
+		//position.print();
+		//collider_n->pos.print();
 	}
 
 	virtual double get_moment_inertia()
