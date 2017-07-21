@@ -29,25 +29,25 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
     else if(coll1->type == Circle_c && coll2->type == Circle_c)
     {
         CircleCollider* n_coll1 = (CircleCollider *) coll1;
-	CircleCollider* n_coll2 = (CircleCollider *) coll2;
+	    CircleCollider* n_coll2 = (CircleCollider *) coll2;
 
-	vector2d delta = n_coll2->pos - n_coll1->pos;
-	float radii_sum = n_coll1->radius + n_coll2->radius;
-	//delta.print();		
-	radii_sum *= radii_sum;
+        vector2d delta = n_coll2->pos - n_coll1->pos;
+        float radii_sum = n_coll1->radius + n_coll2->radius;
+        //delta.print();
+        radii_sum *= radii_sum;
 
-	if(delta.get_squared_length() >= radii_sum)
-		return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
+        if(delta.get_squared_length() >= radii_sum)
+            return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 
-        double distance = delta.get_length();
+            double distance = delta.get_length();
 
-        if(distance != 0)
-        {
-            double penetration = radii_sum - distance;
-            vector2d t = delta.get_unit_vector();
+            if(distance != 0)
+            {
+                double penetration = radii_sum - distance;
+                vector2d t = delta.get_unit_vector();
 
-            return Manifold(penetration, t / distance, n_coll1, n_coll2);
-        }
+                return Manifold(penetration, t / distance, n_coll1, n_coll2);
+            }
 
         return Manifold(n_coll1->radius, vector2d(1, 0), n_coll1, n_coll2);
     }

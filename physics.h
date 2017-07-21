@@ -8,9 +8,9 @@
 #include "renderer.h"
 #include "constraints.h"
 
-#define RUN_TIME 10
+#define RUN_TIME 500
 #define GRAVITY 9.807
-#define TIME_INTERVAL 0.005
+#define TIME_INTERVAL 0.01
 
 class Physics
 {
@@ -46,7 +46,7 @@ public:
         while(start_point < RUN_TIME)
         {
             clock_t now = clock();
-	    start_point += now / CLOCKS_PER_SEC;
+	        start_point += now / CLOCKS_PER_SEC;
 
             for(Object* obj : stage)
             {
@@ -77,36 +77,30 @@ public:
     void collide(Object* obj1, Object* obj2)
     {
         Manifold m = collision_overlap(obj1->get_collider(), obj2->get_collider());
+
         if(m.penetration_depth != -1)
         {
-            //std::cout << "We have a collision!" << std::endl;
-	    // Resolve collision
+	        // Resolve collision
 	    
-	    vector2d relative_vel = obj2->get_velocity() - obj1->get_velocity();
-	    double vel_along_norm = relative_vel * m.normal;
+            vector2d relative_vel = obj2->get_velocity() - obj1->get_velocity();
+            double vel_along_norm = relative_vel * m.normal;
 
-	    if(vel_along_norm > 0)
-		return;
+            if(vel_along_norm > 0)
+                return;
 
-	    double e = std::min(obj1->get_restitution(), obj2->get_restitution());
+            double e = std::min(obj1->get_restitution(), obj2->get_restitution());
+            double j = -(1 + e) * vel_along_norm;
 
-	    double j = -(1 + e) * vel_along_norm;
-	    //std::cout << obj1->get_mass() << std::endl;
-	    //std::cout << (1 / obj1->get_mass()) + (1 / obj2->get_mass()) << std::endl;
-	    j /= (1 / obj1->get_mass()) + (1 / obj2->get_mass());
-	    
-	    //std::cout << j << std::endl;
-	    //m.normal.print();
-	    vector2d impulse = m.normal * j;
-	    //impulse.print();
-	    vector2d tmp = impulse * (1 / obj1->get_mass());
-	    //tmp.print();
-	    tmp = obj1->get_velocity() -  tmp;
-	    obj1->set_velocity(tmp);
+            j /= (1 / obj1->get_mass()) + (1 / obj2->get_mass());
+            vector2d impulse = m.normal * j;
 
-	    tmp = impulse * (1 / obj2->get_mass());
-	    tmp = obj2->get_velocity() + tmp;
-	    obj2->set_velocity(tmp);
+            vector2d tmp = impulse * (1 / obj1->get_mass());
+            tmp = obj1->get_velocity() -  tmp;
+            obj1->set_velocity(tmp);
+
+            tmp = impulse * (1 / obj2->get_mass());
+            tmp = (obj2->get_velocity() + tmp) * -1;
+            obj2->set_velocity(tmp);
 		
         }
     }
