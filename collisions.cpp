@@ -5,11 +5,10 @@
 #include "collisions.h"
 
 // TODO: support more collision types
-bool broad_collision_overlap(Collider* coll1 , Collider* coll2)
+Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 {
     if(coll1->type == AABB_c && coll2->type == AABB_c)
     {
-        // Broad phase
         AABB* n_coll2 = (AABB *) coll2;
         AABB* n_coll1 = (AABB *) coll1;
 
@@ -19,14 +18,40 @@ bool broad_collision_overlap(Collider* coll1 , Collider* coll2)
         double dy2 = n_coll1->min.y - n_coll2->max.y;
 
         if(dx1 > 0 || dy1 > 0)
-            return false;
+            return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 
         if(dx2 > 0 || dy2 > 0)
-            return false;
+            return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 
-        return true;
+        // TODO: Fill with actual values
+        return Manifold(0, vector2d(0, 0), nullptr, nullptr);
     }
-    return false;
+    else if(coll1->type == Circle_c && coll2->type == Circle_c)
+    {
+        CircleCollider* n_coll1 = (CircleCollider *) coll1;
+		CircleCollider* n_coll2 = (CircleCollider *) coll2;
+
+		vector2d delta = n_coll1->pos - n_coll2->pos;
+		float radii_sum = n_coll1->radius + n_coll2->radius;
+		
+		radii_sum *= radii_sum;
+
+		if(delta.get_squared_length() >= radii_sum)
+			return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
+
+        double distance = delta.get_length();
+
+        if(distance != 0)
+        {
+            double penetration = radii_sum - distance;
+            vector2d t = delta.get_unit_vector();
+
+            return Manifold(penetration, t / distance, n_coll1, n_coll2);
+        }
+
+        return Manifold(n_coll1->radius, vector2d(1, 0), n_coll1, n_coll2);
+    }
+    return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 }
 
 

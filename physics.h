@@ -10,6 +10,7 @@
 
 #define RUN_TIME 10
 #define GRAVITY 9.807
+#define TIME_INTERVAL 0.01
 
 class Physics
 {
@@ -45,16 +46,11 @@ public:
         while(start_point < RUN_TIME)
         {
             clock_t now = clock();
-
-            start_point += now / CLOCKS_PER_SEC;
-
-            double dt = (now - last) / CLOCKS_PER_SEC;
-
-            last = now;
+	    start_point += now / CLOCKS_PER_SEC;
 
             for(Object* obj : stage)
             {
-                obj->calculate(dt);
+                obj->calculate(TIME_INTERVAL);
             }
 
             calculate_collisions();
@@ -80,14 +76,15 @@ public:
 
     void collide(Object* obj1, Object* obj2)
     {
-        if(broad_collision_overlap(obj1->get_collider(), obj2->get_collider()))
+        Manifold m = collision_overlap(obj1->get_collider(), obj2->get_collider());
+        if(m.penetration_depth != -1)
         {
             // std::cout << "We have a potential collision!" << std::endl;
 
-            if(narrow_collision_overlap(obj1, obj2))
-            {
-                std::cout << "We have a collision!" << std::endl;
-            }
+            //if(narrow_collision_overlap(obj1, obj2))
+            //{
+            std::cout << "We have a collision!" << std::endl;
+            //}
         }
     }
 };

@@ -94,11 +94,6 @@ public:
             acceleration = force_sum / mass;
         }
 
-
-        // TODO: think of a more reasonable way
-        if(time < 0.1)
-            time *= 20;
-
         // Apply natural rotation
         vector2d r = get_arm_vector();
         torque = r * force_sum;

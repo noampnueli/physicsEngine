@@ -15,6 +15,19 @@ public:
     CollType type;
 };
 
+typedef struct Manifold
+{
+	Collider *A;
+	Collider *B;
+
+	double penetration_depth;
+	vector2d normal;
+
+public:
+	Manifold(double penetration_depth, vector2d normal, Collider *A, Collider *B)
+			: penetration_depth(penetration_depth), normal(normal), A(A), B(B) {}
+} Manifold;
+
 class AABB : public Collider
 {
 public:
@@ -33,6 +46,6 @@ public:
 	CircleCollider() { this->type = Circle_c; }
 };
 
-bool broad_collision_overlap(Collider* coll1, Collider* coll2);
+Manifold collision_overlap(Collider* coll1, Collider* coll2);
 
 #endif //GRAPHICSTEST_COLLISIONS_H

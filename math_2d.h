@@ -57,6 +57,22 @@ public:
         return vector2d(y, -x);
     }
 
+    vector2d get_unit_vector()
+    {
+        double magnitude = get_length();
+        return vector2d(x / magnitude, y / magnitude);
+    }
+
+    double get_squared_length()
+    {
+	    return x*x + y*y;
+    }
+
+    double get_length()
+    {
+        return (double) std::sqrt(x*x + y*y);
+    }
+
     void zero()
     {
         x = 0;
