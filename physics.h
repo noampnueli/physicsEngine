@@ -95,11 +95,13 @@ public:
             vector2d impulse = m.normal * j;
 
             vector2d tmp = impulse * (1 / obj1->get_mass());
-            tmp = obj1->get_velocity() -  tmp;
+            tmp = (obj1->get_velocity() - tmp);
+	    tmp.x *= -1;
             obj1->set_velocity(tmp);
 
             tmp = impulse * (1 / obj2->get_mass());
-            tmp = (obj2->get_velocity() + tmp) * -1;
+            tmp = (obj2->get_velocity() + tmp);
+	    tmp.x *= -1;
             obj2->set_velocity(tmp);
 		
         }
