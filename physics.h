@@ -96,12 +96,13 @@ public:
 
             vector2d tmp = impulse * (obj1->get_inverse_mass());
             tmp = (obj1->get_velocity() - tmp);
-	    tmp.x *= -1;
+	        tmp.x *= -1;
             obj1->set_velocity(tmp);
 
             tmp = impulse * (obj2->get_inverse_mass());
             tmp = (obj2->get_velocity() + tmp);
-	    tmp.x *= -1;
+	        tmp.x *= -1;
+            tmp.y *= -1;
             obj2->set_velocity(tmp);
 		
         }
