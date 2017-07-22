@@ -48,7 +48,10 @@ public:
     Object(double mass, vector2d position, vector2d start_velocity)
     {
         this->mass = mass;
-	this->inverse_mass = 1 / mass;
+	if(mass != 0)
+		this->inverse_mass = 1 / mass;
+	else
+		this->inverse_mass = 0;
         this->position = position;
         this->velocity = start_velocity;
         angle = 0;
@@ -58,7 +61,10 @@ public:
     Object(double mass, vector2d position, vector2d start_velocity, double angle)
     {
         this->mass = mass;
-	this->inverse_mass = 1 / mass;
+	if(mass != 0)
+		this->inverse_mass = 1 / mass;
+	else
+		this->inverse_mass = 0;
         this->position = position;
         this->velocity = start_velocity;
         this->angle = angle;
