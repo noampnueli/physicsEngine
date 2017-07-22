@@ -39,15 +39,15 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         if(delta.get_squared_length() >= radii_sum)
             return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 
-            double distance = delta.get_length();
+        double distance = delta.get_length();
 
-            if(distance != 0)
-            {
-                double penetration = radii_sum - distance;
-                vector2d t = delta.get_unit_vector();
+        if(distance != 0)
+        {
+            double penetration = radii_sum - distance;
+            vector2d t = delta.get_unit_vector();
 
-                return Manifold(penetration, t / distance, n_coll1, n_coll2);
-            }
+            return Manifold(penetration, t / distance, n_coll1, n_coll2);
+        }
 
         return Manifold(n_coll1->radius, vector2d(1, 0), n_coll1, n_coll2);
     }
