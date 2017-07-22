@@ -91,15 +91,15 @@ public:
             double e = std::min(obj1->get_restitution(), obj2->get_restitution());
             double j = -(1 + e) * vel_along_norm;
 
-            j /= (1 / obj1->get_mass()) + (1 / obj2->get_mass());
+            j /= (obj1->get_inverse_mass()) + (obj2->get_inverse_mass());
             vector2d impulse = m.normal * j;
 
-            vector2d tmp = impulse * (1 / obj1->get_mass());
+            vector2d tmp = impulse * (obj1->get_inverse_mass());
             tmp = (obj1->get_velocity() - tmp);
 	    tmp.x *= -1;
             obj1->set_velocity(tmp);
 
-            tmp = impulse * (1 / obj2->get_mass());
+            tmp = impulse * (obj2->get_inverse_mass());
             tmp = (obj2->get_velocity() + tmp);
 	    tmp.x *= -1;
             obj2->set_velocity(tmp);

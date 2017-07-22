@@ -16,6 +16,7 @@ protected:
     std::vector<vector2d> forces;
     std::vector<vector2d> tmp_forces;
     double mass;
+    double inverse_mass;
     Collider* collider;
     std::vector<vector2d> vertices;
 
@@ -47,6 +48,7 @@ public:
     Object(double mass, vector2d position, vector2d start_velocity)
     {
         this->mass = mass;
+	this->inverse_mass = 1 / mass;
         this->position = position;
         this->velocity = start_velocity;
         angle = 0;
@@ -56,6 +58,7 @@ public:
     Object(double mass, vector2d position, vector2d start_velocity, double angle)
     {
         this->mass = mass;
+	this->inverse_mass = 1 / mass;
         this->position = position;
         this->velocity = start_velocity;
         this->angle = angle;
@@ -187,6 +190,11 @@ public:
     double get_mass()
     {
         return mass;
+    }
+
+    double get_inverse_mass()
+    {
+    	return inverse_mass;
     }
 
     double get_angle()
