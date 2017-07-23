@@ -3,6 +3,7 @@
 //
 
 #include "collisions.h"
+#include <algorithm>
 
 // TODO: support more collision types
 Manifold collision_overlap(Collider* coll1 , Collider* coll2)
@@ -65,6 +66,15 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 	   n_coll2 = (AABB *)coll1;
 	   n_coll1 = (CircleCollider *)coll2;
 	}
+
+	vector2d delta_pos = n_coll2->pos - n_coll1->pos;
+	vector2d closest = delta_pos;
+
+	double extent_x = (n_coll2->max.x - n_coll2->min.x) / 2;
+	double extent_y = (n_coll2->max.y - n_coll2->min.y) / 2;
+
+	closest.x = std::clamp(-extent_x, extent_x, closest.x);
+	closest.y = std::clamp(-extent_y, extent_y, closest.y);
 
 
     }

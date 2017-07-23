@@ -27,6 +27,11 @@ public:
         this->y = y;
     }
 
+    virtual bool operator== (vector2d& vec)
+    {
+    	return vec.x == x && vec.y == y;
+    }
+
     virtual vector2d operator+ (vector2d& vec)
     {
         return vector2d(this->x + vec.x, this->y + vec.y);
