@@ -33,6 +33,7 @@ class AABB : public Collider
 public:
     vector2d min;
     vector2d max;
+    vector2d pos;
 
     AABB() { this->type = AABB_c; }
 };
