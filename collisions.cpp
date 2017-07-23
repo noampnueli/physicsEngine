@@ -9,14 +9,43 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 {
     if(coll1->type == AABB_c && coll2->type == AABB_c)
     {
-
         AABB* abox = (AABB *) coll1;
         AABB* bbox = (AABB *) coll2;
+
+        vector2d n = bbox->pos - abox->pos;
 
         double a_extent = (abox->max.x - abox->min.x) / 2;
         double b_extent = (bbox->max.x - bbox->min.x) / 2;
 
         double x_overlap = a_extent + b_extent - abs(n.x);
+
+        if(x_overlap > 0)
+        {
+            a_extent = (abox->max.y - abox->min.y) / 2;
+            b_extent = (bbox->max.y - bbox->min.y) / 2;
+
+            double y_overlap = a_extent + b_extent - abs(n.y);
+
+            if(y_overlap > 0)
+            {
+                if(x_overlap > y_overlap)
+                {
+                    if(n.x < 0)
+                        return Manifold(x_overlap, vector2d(-1, 0), abox, bbox);
+                    else
+                        return Manifold(x_overlap, vector2d(0, 0), abox, bbox);
+
+                }
+            }
+            else
+            {
+                if(n.y < 0)
+                    return Manifold(y_overlap, vector2d(0, -1), abox, bbox);
+                else
+                    return Manifold(y_overlap, vector2d(0, 1), abox, bbox);
+
+            }
+        }
 
 //        double dx1 = n_coll2->min.x - n_coll1->max.x;
 //        double dy1 = n_coll2->min.y - n_coll1->max.y;
