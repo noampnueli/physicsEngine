@@ -95,7 +95,7 @@ public:
             vector2d impulse = m.normal * j;
 
             vector2d tmp = impulse * (obj1->get_inverse_mass());
-            tmp = tmp * 10000;
+            tmp = tmp * 10000; // Temporary monkey patch
             tmp = (obj1->get_velocity() - tmp);
 
             obj1->set_velocity(tmp);
