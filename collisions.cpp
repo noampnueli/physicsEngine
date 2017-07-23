@@ -75,8 +75,29 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 
 	closest.x = std::clamp(-extent_x, extent_x, closest.x);
 	closest.y = std::clamp(-extent_y, extent_y, closest.y);
+	
+	bool inside = false;
 
+	if(delta_pos == closest)
+	{
+	    inside = true;
+	}
 
+	vector2d normal = delta_pos - closest;
+	double len = normal.get_squared_length();
+	double radius = n_coll1->radius;
+
+	if(len > radius * radius && !inside)
+	    return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
+
+	len = std::sqrt(len);
+
+	if(inside)
+	{
+	    return Manifold(radius - len, normal * -1, n_coll1, n_coll2);
+	}
+	
+	return Manifold(radius - len, normal, n_coll1, n_coll2);
     }
     return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 }
