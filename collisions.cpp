@@ -33,7 +33,6 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 
         vector2d delta = n_coll2->pos - n_coll1->pos;
         float radii_sum = n_coll1->radius + n_coll2->radius;
-        //delta.print();
         radii_sum *= radii_sum;
 
         if(delta.get_squared_length() >= radii_sum)
@@ -50,6 +49,24 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         }
 
         return Manifold(n_coll1->radius, vector2d(1, 0), n_coll1, n_coll2);
+    }
+    else if((coll1->type == AABB_c && coll2->type == Circle_c) || (coll2->type == AABB_c && coll1->type == Circle_c))
+    {
+	CircleCollider *n_coll1;
+	AABB *n_coll2;
+
+    	if(coll1->type == Circle_c)
+	{
+	    n_coll1 = (CircleCollider *)coll1;
+	    n_coll2 = (AABB *)coll2;
+	}
+	else
+	{
+	   n_coll2 = (AABB *)coll1;
+	   n_coll1 = (CircleCollider *)coll2;
+	}
+
+
     }
     return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 }

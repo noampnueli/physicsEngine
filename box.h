@@ -31,7 +31,7 @@ private:
         vector2d pivot = vector2d(px, py);
 
 
-        rotate(vertices, pivot, angle);
+        //rotate(vertices, pivot, angle);
 
     }
 
@@ -80,11 +80,12 @@ public:
 
     virtual void update_collider()
     {
-        update_vertices();
+	update_vertices();
 
         AABB* collider_n = (AABB*) collider;
         collider_n->min = vector2d((int) get_position().x, (int) get_position().y);
         collider_n->max = vector2d(get_position().x + width, get_position().y + height);
+	collider_n->pos = position;
     }
 
     virtual double get_moment_inertia()
