@@ -7,6 +7,7 @@
 
 #include "math_2d.h"
 
+
 enum CollType { AABB_c, Circle_c };
 
 class Collider
@@ -46,6 +47,7 @@ public:
 
 	CircleCollider() { this->type = Circle_c; }
 };
+
 
 Manifold collision_overlap(Collider* coll1, Collider* coll2);
 

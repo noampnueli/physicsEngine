@@ -3,7 +3,16 @@
 //
 
 #include "collisions.h"
-#include <algorithm>
+
+double clamp(double min, double max, double n)
+{
+    if(n < min)
+        return min;
+    else if(n > max)
+	return max;
+    
+    return n;    
+}
 
 // TODO: support more collision types
 Manifold collision_overlap(Collider* coll1 , Collider* coll2)
@@ -18,14 +27,14 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         double a_extent = (abox->max.x - abox->min.x) / 2;
         double b_extent = (bbox->max.x - bbox->min.x) / 2;
 
-        double x_overlap = a_extent + b_extent - abs(n.x);
+        double x_overlap = a_extent + b_extent - std::abs(n.x);
 
         if(x_overlap > 0)
         {
             a_extent = (abox->max.y - abox->min.y) / 2;
             b_extent = (bbox->max.y - bbox->min.y) / 2;
 
-            double y_overlap = a_extent + b_extent - abs(n.y);
+            double y_overlap = a_extent + b_extent - std::abs(n.y);
 
             if(y_overlap > 0)
             {
@@ -68,7 +77,7 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 	    CircleCollider* n_coll2 = (CircleCollider *) coll2;
 
         vector2d delta = n_coll2->pos - n_coll1->pos;
-        float radii_sum = n_coll1->radius + n_coll2->radius;
+        double radii_sum = n_coll1->radius + n_coll2->radius;
         radii_sum *= radii_sum;
 
         if(delta.get_squared_length() >= radii_sum)
@@ -88,51 +97,52 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
     }
     else if((coll1->type == AABB_c && coll2->type == Circle_c) || (coll2->type == AABB_c && coll1->type == Circle_c))
     {
-	CircleCollider *n_coll1;
-	AABB *n_coll2;
 
-    	if(coll1->type == Circle_c)
-	{
-	    n_coll1 = (CircleCollider *)coll1;
-	    n_coll2 = (AABB *)coll2;
-	}
-	else
-	{
-	   n_coll2 = (AABB *)coll1;
-	   n_coll1 = (CircleCollider *)coll2;
-	}
+        CircleCollider *n_coll1;
+        AABB *n_coll2;
 
-	vector2d delta_pos = n_coll2->pos - n_coll1->pos;
-	vector2d closest = delta_pos;
+        if(coll1->type == Circle_c)
+        {
+            n_coll1 = (CircleCollider *)coll1;
+            n_coll2 = (AABB *)coll2;
+        }
+        else
+        {
+           n_coll2 = (AABB *)coll1;
+           n_coll1 = (CircleCollider *)coll2;
+        }
 
-	double extent_x = (n_coll2->max.x - n_coll2->min.x) / 2;
-	double extent_y = (n_coll2->max.y - n_coll2->min.y) / 2;
+        vector2d delta_pos = n_coll2->pos - n_coll1->pos;
+        vector2d closest = delta_pos;
 
-	closest.x = std::clamp(-extent_x, extent_x, closest.x);
-	closest.y = std::clamp(-extent_y, extent_y, closest.y);
-	
-	bool inside = false;
+        double extent_x = (n_coll2->max.x - n_coll2->min.x) / 2;
+        double extent_y = (n_coll2->max.y - n_coll2->min.y) / 2;
 
-	if(delta_pos == closest)
-	{
-	    inside = true;
-	}
+        closest.x = clamp(-extent_x, extent_x, closest.x);
+        closest.y = clamp(-extent_y, extent_y, closest.y);
 
-	vector2d normal = delta_pos - closest;
-	double len = normal.get_squared_length();
-	double radius = n_coll1->radius;
+        bool inside = false;
 
-	if(len > radius * radius && !inside)
-	    return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
+        if(delta_pos == closest)
+        {
+            inside = true;
+        }
 
-	len = std::sqrt(len);
+        vector2d normal = delta_pos - closest;
+        double len = normal.get_squared_length();
+        double radius = n_coll1->radius;
 
-	if(inside)
-	{
-	    return Manifold(radius - len, normal * -1, n_coll1, n_coll2);
-	}
-	
-	return Manifold(radius - len, normal, n_coll1, n_coll2);
+        if(len < radius * radius && !inside)
+            return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
+
+        len = std::sqrt(len);
+
+        if(inside)
+        {
+            return Manifold(radius - len, normal * -1, n_coll1, n_coll2);
+        }
+
+        return Manifold(radius - len, normal, n_coll1, n_coll2);
     }
     return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 }
