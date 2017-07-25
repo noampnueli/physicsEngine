@@ -9,7 +9,7 @@ double clamp(double min, double max, double n)
     if(n < min)
         return min;
     else if(n > max)
-	return max;
+	    return max;
     
     return n;    
 }
