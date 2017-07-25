@@ -127,21 +127,20 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         {
             inside = true;
 	    
-	    if(std::abs(delta_pos.x) > std::abs(delta_pos.y))
-	    {
-	    	if(closest.x > 0)
-		    closest.x = extent_x;
-	    	else
-		    closest.x = -extent_x;
-	    }
-	    else
-	    {
-	    	if(closest.y > 0)
-		    closest.y = extent_y;
-		else
-		    closest.y = -extent_y;
-	    }
-
+            if(std::abs(delta_pos.x) > std::abs(delta_pos.y))
+            {
+                if(closest.x > 0)
+                    closest.x = extent_x;
+                else
+                    closest.x = -extent_x;
+            }
+            else
+            {
+                if(closest.y > 0)
+                    closest.y = extent_y;
+                else
+                    closest.y = -extent_y;
+            }
         }
 
         vector2d normal = delta_pos - closest;
