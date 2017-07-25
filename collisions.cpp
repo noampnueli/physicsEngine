@@ -3,15 +3,17 @@
 //
 
 #include "collisions.h"
+using namespace std;
 
-double clamp(double min, double max, double n)
+double clamp(double lower, double upper, double n)
 {
-    if(n < min)
-        return min;
-    else if(n > max)
-	    return max;
-    
-    return n;    
+    return max(lower, min(n, upper));
+//    if(n < min)
+//        return min;
+//    else if(n > max)
+//	    return max;
+//
+//    return n;
 }
 
 // TODO: support more collision types
@@ -108,11 +110,11 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         }
         else
         {
-           n_coll2 = (AABB *)coll1;
-           n_coll1 = (CircleCollider *)coll2;
+            n_coll1 = (CircleCollider *)coll2;
+            n_coll2 = (AABB *)coll1;
         }
 
-        vector2d delta_pos = n_coll2->pos - n_coll1->pos;
+        vector2d delta_pos = n_coll1->pos - n_coll2->pos;
         vector2d closest = delta_pos;
 
         double extent_x = (n_coll2->max.x - n_coll2->min.x) / 2;
@@ -126,23 +128,45 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         if(delta_pos == closest)
         {
             inside = true;
+
+            if(abs(delta_pos.x) > abs(delta_pos.y))
+            {
+                if(closest.x > 0)
+                    closest.x = extent_x;
+                else
+                    closest.x = -extent_x;
+            }
+            else
+            {
+                if(closest.y > 0)
+                    closest.y = extent_y;
+                else
+                    closest.y = -extent_y;
+            }
         }
 
-        vector2d normal = delta_pos - closest;
+        vector2d normal = (delta_pos - closest);
         double len = normal.get_squared_length();
         double radius = n_coll1->radius;
 
         if(len > (radius * radius) && !inside)
+        {
             return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
+        }
+//        normal.print();
 
         len = std::sqrt(len);
 
+//        vector2d distraction = normal.get_unit_vector() * radius;
+//        normal = normal - distraction;
+
         if(inside)
         {
-            return Manifold(radius - len, normal * -1, n_coll1, n_coll2);
+            printf("ehhhhh");
+            return Manifold(radius - len, normal.get_unit_vector() * -1, n_coll1, n_coll2);
         }
 
-        return Manifold(radius - len, normal, n_coll1, n_coll2);
+        return Manifold(radius - len, normal.get_unit_vector(), n_coll1, n_coll2);
     }
     return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 }
