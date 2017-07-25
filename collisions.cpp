@@ -139,10 +139,10 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
 
         if(inside)
         {
-            return Manifold(radius - len, normal * -1, n_coll1, n_coll2);
+            return Manifold(radius - len, (normal * -1).get_unit_vector(), n_coll1, n_coll2);
         }
 
-        return Manifold(radius - len, normal, n_coll1, n_coll2);
+        return Manifold(radius - len, normal.get_unit_vector(), n_coll1, n_coll2);
     }
     return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 }
