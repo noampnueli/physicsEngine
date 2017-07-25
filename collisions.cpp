@@ -132,7 +132,7 @@ Manifold collision_overlap(Collider* coll1 , Collider* coll2)
         double len = normal.get_squared_length();
         double radius = n_coll1->radius;
 
-        if(len < radius * radius && !inside)
+        if(len > (radius * radius) && !inside)
             return Manifold(-1, vector2d(0, 0), nullptr, nullptr);
 
         len = std::sqrt(len);
